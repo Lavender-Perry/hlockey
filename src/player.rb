@@ -27,3 +27,4 @@ class Player
     @agility = $random.rand * 5
   end
 end
+

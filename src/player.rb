@@ -1,34 +1,31 @@
-$random = Random.new 8010897121101114
+$random = Random.new 8010897121101114 # This never changes
 
 class Player
   attr_accessor :name, :offense, :defense, :agility
   def initialize
-    @name = player_name
+    @name = random_name + " " + random_name
     @offense = $random.rand * 5
     @defense = $random.rand * 5
     @agility = $random.rand * 5
   end
 end
 
-def player_name
-  fname_length = $random.rand(9) + 2
-  lname_length = $random.rand(9) + 2
-  fname = ""
-  lname = ""
+def random_name
+  len = $random.rand(9) + 2
+  mod_num = if len == 2 then 2 else 3 end
+  i_add = $random.rand mod_num
+  name = ""
 
-  fname_length.times do |i| fname += random_letter i end
-  lname_length.times do |i| lname += random_letter i end
+  len.times do |i|
+    array = random_letter_array((i + i_add) % mod_num)
+    name += array[$random.rand array.length]
+  end
 
-  fname.capitalize + " " + lname.capitalize
-end
-
-def random_letter(i)
-  array = random_letter_array i % 3
-  array[$random.rand array.length]
+  name.capitalize
 end
 
 def random_letter_array(n)
-  vowels = ["a", "e", "i", "o", "u", "y"]
+  vowels = ["a", "e", "i", "o", "u"]
   consonates = ("a".."z").filter do |l| not vowels.include? l end
   case n
   when 0

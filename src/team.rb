@@ -1,16 +1,26 @@
 require_relative "./player.rb"
 
 class Team
-  attr_accessor :name, :emoji, :wins, :losses, :offense, :defense
-  def initialize(name, emoji)
+  attr_accessor :name, :emoji, :wins, :losses, :roster
+  def initialize(name, emoji,
+                 roster_idxs = {
+                   :lwing  => 0,
+                   :center => 1,
+                   :rwing  => 2,
+                   :ldef   => 3,
+                   :goalie => 4,
+                   :rdef   => 5
+                 })
     @name = name
     @emoji = emoji
     @wins = 0
     @losses = 0
-    @offense = []
-    @defense = []
-    3.times do @offense << Player.new end
-    3.times do @defense << Player.new end
+    @roster = {}
+    players = []
+    6.times do players << Player.new end
+    roster_idxs.each do |pos, i|
+      @roster[pos] = players[i]
+    end
   end
 end
 

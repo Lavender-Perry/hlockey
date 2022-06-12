@@ -24,10 +24,10 @@ class League
         Team.new("Orcadas Base Fog", "🌁")
       ],
       "Dry Cool": [
-        Team.new("Amsterdam Reapers", "💀"),
         Team.new("Baghdad Abaci", "🧮"),
         Team.new("Dawson City Impostors", "🔪"),
-        Team.new("Jakarta Architects", "📐")
+        Team.new("Jakarta Architects", "📐"),
+        Team.new("Stony Brook Reapers", "💀")
       ]
     }
     @prng = Random.new 69420 * season

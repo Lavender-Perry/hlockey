@@ -68,7 +68,7 @@ class Game
 
     receiver = @team_with_puck.roster[:non_goalies].select do |player|
       player != @puck_holder
-    end.sample
+    end.sample @prng
 
     @stream << receiver.name + " receives the pass."
     @puck_holder = receiver
@@ -96,7 +96,7 @@ class Game
   end
 
   def non_goalie_opponent
-    @team_without_puck.roster[:non_goalies].sample
+    @team_without_puck.roster[:non_goalies].sample @prng
   end
 end
 

@@ -2,6 +2,7 @@ require_relative "./team.rb"
 
 class League
   attr_accessor :season, :divisions
+
   def initialize season
     @season = season
     @divisions = {

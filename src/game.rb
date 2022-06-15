@@ -66,9 +66,8 @@ class Game
 
     return if not @face_off and try_take_puck non_goalie_opponent, 2
 
-    receiver = @team_with_puck.roster[:non_goalies].select do |player|
-      player != @puck_holder
-    end.sample @prng
+    receiver = @team_with_puck.roster[:non_goalies].select do |p| p != @puck_holder end
+      .sample random: @prng
 
     @stream << receiver.name + " receives the pass."
     @puck_holder = receiver
@@ -96,7 +95,7 @@ class Game
   end
 
   def non_goalie_opponent
-    @team_without_puck.roster[:non_goalies].sample @prng
+    @team_without_puck.roster[:non_goalies].sample random: @prng
   end
 end
 

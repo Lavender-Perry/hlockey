@@ -27,7 +27,7 @@ class Player
       combination = combination[1] + next_letter
     end
     
-    result.capitalize
+    result
   end
 end
 

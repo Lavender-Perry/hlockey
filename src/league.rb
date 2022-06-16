@@ -50,7 +50,7 @@ class League
   end
 
   def new_games
-    if @game_in_matchup == 3 then
+    if @game_in_matchup == 3
       @game_in_matchup = 1
       @matchup_amount += 1
 
@@ -61,7 +61,6 @@ class League
       end
 
       @shuffled_teams.insert 1, @shuffled_teams.pop
-
       return
     end
 

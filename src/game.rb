@@ -21,15 +21,13 @@ class Game
   def update
     return unless @in_progress
 
-    if @actions == 60 then
+    if @actions == 60
       @stream << "End of period #{@period}."
       report_score
       @actions = 0
       @period += 1
 
-      if @period > 3 then
-        return if @score[:home] == @score[:away] and @period < 12
-
+      if @period > 3 and not(@score[:home] == @score[:away] and @period < 12)
         @stream << "Game over."
         @in_progress = false
 
@@ -56,8 +54,8 @@ class Game
 
     @actions += 1
 
-    if @face_off then
-      if @puck_holder == nil then
+    if @face_off
+      if @puck_holder == nil
         # Pass opposite team to who wins the puck to switch_team_with_puck,
         # so @team_with_puck & @team_without_puck are set to the correct values.
         switch_team_with_puck(
@@ -100,23 +98,22 @@ class Game
   def pass
     @stream << @puck_holder.name + " sends a pass."
 
-    return if not @face_off and try_take_puck non_goalie_opponent, 2
-
-    receiver = @team_with_puck.roster[:non_goalies].select do |p| p != @puck_holder end
-      .sample random: @prng
-
-    @stream << receiver.name + " receives the pass."
-    @puck_holder = receiver
-    @shooting_chance += 1
+    unless not @face_off and try_take_puck non_goalie_opponent, 2
+      receiver = @team_with_puck.roster[:non_goalies].select do |p|
+        p != @puck_holder
+      end.sample random: @prng
+      @stream << receiver.name + " receives the pass."
+      @puck_holder = receiver
+      @shooting_chance += 1
+    end
   end
 
   def shoot
     @stream << @puck_holder.name + " takes a shot!"
 
-    return if @shooting_chance < 5 and
-      try_block_shot @team_without_puck.roster[@prng.rand(2) == 0 ? :ldef : :rdef]
-
-    unless try_block_shot @team_without_puck.roster[:goalie] then
+    unless @shooting_chance < 5 and
+        try_block_shot @team_without_puck.roster[@prng.rand(2) == 0 ? :ldef : :rdef] or
+        try_block_shot @team_without_puck.roster[:goalie]
       @stream << @puck_holder.name + " scores!"
       @score[@team_with_puck == @home ? :home : :away] += 1
       report_score
@@ -131,7 +128,7 @@ class Game
   end
 
   def try_take_puck player, disadvantage = 0
-    if action_succeeds? player.agility - disadvantage, @puck_holder.agility then
+    if action_succeeds? player.agility - disadvantage, @puck_holder.agility
       @stream << player.name + " takes the puck!"
       switch_team_with_puck
       @puck_holder = player
@@ -141,7 +138,7 @@ class Game
   end
 
   def try_block_shot player
-    if action_succeeds? player.defense, @puck_holder.offense then
+    if action_succeeds? player.defense, @puck_holder.offense
       @stream << player.name + " blocks the shot!"
       @shooting_chance += 1
       try_take_puck player

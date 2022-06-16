@@ -18,22 +18,22 @@ class League
         Team.new("Dawson City Impostors", "🔪"),
         Team.new("Erlangen Ohms", "🇴"),
         Team.new("Pompei Eruptions", "🌋"),
-        Team.new("Rio de Janeiro Gamers", "💯"),
+        Team.new("Rio de Janeiro Directors", "🎦"),
         Team.new("Wyrzysk Rockets", "🚀")
       ],
       "Wet Cool": [
         Team.new("Cape Town Transplants", "🌱"),
         Team.new("Nagqu Paint", "🎨"),
         Team.new("Manbij Fish", "🐠"),
-        Team.new("Nice Backflippers", "🔙"),
+        Team.new("Nice Backflippers", "🔁"),
         Team.new("Orcadas Base Fog", "🌁")
       ],
       "Dry Cool": [
         Team.new("Baghdad Abacuses", "🧮"),
         Team.new("Jakarta Architects", "📐"),
-        Team.new("Kyoto Payphones", "📞"),
-        Team.new("Orange Thinkers", "🤔"),
-        Team.new("Stony Brook Reapers", "💀")
+        Team.new("Kyoto Payphones", "📳"),
+        Team.new("Stony Brook Reapers", "💀"),
+        Team.new("Tamworth Horses", "🐴")
       ]
     }
     @games_in_progress = []

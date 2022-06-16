@@ -33,7 +33,7 @@ class League
         Team.new("Jakarta Architects", "📐"),
         Team.new("Kyoto Payphones", "📳"),
         Team.new("Stony Brook Reapers", "💀"),
-        Team.new("Tamworth Horses", "🐴")
+        Team.new("Sydney Thinkers", "🤔")
       ]
     }
     @games_in_progress = []

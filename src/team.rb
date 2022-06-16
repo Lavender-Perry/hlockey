@@ -8,8 +8,7 @@ class Team
                                              :ldef   => 3,
                                              :goalie => 4,
                                              :rdef   => 5}
-    @name = name
-    @emoji = emoji
+    @name, @emoji = [name, emoji]
     @wins = 0
     @losses = 0
     @roster = {}

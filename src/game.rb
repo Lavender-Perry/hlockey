@@ -1,14 +1,14 @@
 class Game
-  attr_accessor :home, :away, :score, :stream, :game_ended
+  attr_accessor :home, :away, :stream, :in_progress
 
   def initialize home, away, prng
     @home, @away, @prng = [home, away, prng]
+    @stream = ["*whistle blow*"]
+    @in_progress = true
     @score = {
       :home => 0,
       :away => 0
     }
-    @stream = ["*whistle blow*"]
-    @game_ended = false
     @actions = 0
     @period = 1
     @face_off = true
@@ -19,53 +19,35 @@ class Game
   end
 
   def update
-    return if @game_ended
+    return unless @in_progress
 
-    if @actions == 20 then
+    if @actions == 60 then
       @stream << "End of period #{@period}."
       report_score
       @actions = 0
       @period += 1
 
-      if @period >= 4 then
-        shootouts = 0
-        while @score[:home] == @score[:away] do
-          if @period == 4 then
-            @stream << "Overtime..."
-            return
-          end
-
-          if shootouts == 3 then
-            @stream << "Both teams are too tired to continue."
-            @stream << "Game over."
-            @stream << "Nobody wins."
-            [@home, @away].each do |t| t.losses += 1 end
-            @game_ended = true
-            return
-          end
-
-          @stream << "The game is still tied."
-          @stream << "Shootout..."
-          @shooting_chance = 10
-          [@home, @away].each do |t|
-            players_who_shot = []
-            3.times do
-              @puck_holder = t.roster[:non_goalies].select do |p|
-                not players_who_shot.include? p
-              end
-              players_who_shot << @puck_holder
-              shoot
-            end
-          end
-          shootouts += 1
-        end
+      if @period > 3 then
+        return if @score[:home] == @score[:away] and @period < 12
 
         @stream << "Game over."
-        winner, loser = @score[:home] > @score[:away] ? [@home, @away] : [@away, @home]
+        @in_progress = false
+
+        winner, loser = case @score[:home] <=> @score[:away]
+                        when 1
+                          [@home, @away]
+                        when -1
+                          [@away, @home]
+                        when 0
+                          @stream << "Nobody wins."
+                          @home.losses += 1
+                          @away.losses += 1
+                          return
+                        end
+
         @stream << winner.name + " wins!"
         winner.wins += 1
         loser.losses += 1
-        @game_ended = true
       end
       return
     end
@@ -112,6 +94,7 @@ class Game
     @team_with_puck, @team_without_puck = team_with_puck == @home ?
       [@away, @home] : [@home, @away]
     @shooting_chance = 0
+    @stream << @team_with_puck + " has possession."
   end
 
   def pass
@@ -139,7 +122,7 @@ class Game
       report_score
       @shooting_chance = 0
       @face_off = true
-      @actions = 20 if @period == 4 # Sudden death overtime
+      @actions = 60 if @period > 3 # Sudden death overtime
     end
   end
 

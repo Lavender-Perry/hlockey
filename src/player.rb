@@ -19,7 +19,7 @@ class Player
     result = ""
 
     10.times do
-      next_letters = $names_markov_chain[combination]
+      next_letters = NamesMarkovChain[combination]
       break if next_letters == nil
       next_letter = next_letters.sample random: @@prng
       break if next_letter == "_"

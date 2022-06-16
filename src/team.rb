@@ -17,7 +17,6 @@ class Team
     roster_idxs.each do |pos, i|
       @roster[pos] = players[i]
     end
-    @roster[:non_goalies] = players.select do |p| p != @roster[:goalie] end
   end
 end
 

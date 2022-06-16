@@ -13,7 +13,7 @@ class Game
     @period = 1
     @face_off = true
     @team_with_puck = nil
-    @team_without_puck = nil
+    @puckless_team = nil
     @puck_holder = nil
     @shooting_chance = 0
   end
@@ -57,7 +57,7 @@ class Game
     if @face_off
       if @puck_holder == nil
         # Pass opposite team to who wins the puck to switch_team_with_puck,
-        # so @team_with_puck & @team_without_puck are set to the correct values.
+        # so @team_with_puck & @puckless_team are set to the correct values.
         switch_team_with_puck(
           action_succeeds?(@home.roster[:center].offense,
                            @away.roster[:center].offense) ? @away : @home)
@@ -75,7 +75,7 @@ class Game
     when 0..4
       pass
     when 5..6 # Check
-      defender = non_goalie_opponent
+      defender = puckless_non_goalie
       @stream << "#{defender.name} hits #{@puck_holder.name}!"
       try_take_puck defender
     else
@@ -89,7 +89,7 @@ class Game
   end
 
   def switch_team_with_puck team_with_puck = @team_with_puck
-    @team_with_puck, @team_without_puck = team_with_puck == @home ?
+    @team_with_puck, @puckless_team = team_with_puck == @home ?
       [@away, @home] : [@home, @away]
     @shooting_chance = 0
     @stream << @team_with_puck + " has possession."
@@ -98,10 +98,8 @@ class Game
   def pass
     @stream << @puck_holder.name + " sends a pass."
 
-    unless not @face_off and try_take_puck non_goalie_opponent, 2
-      receiver = @team_with_puck.roster[:non_goalies].select do |p|
-        p != @puck_holder
-      end.sample random: @prng
+    unless not @face_off and try_take_puck puckless_non_goalie, 2
+      receiver = puckless_non_goalie @team_with_puck
       @stream << receiver.name + " receives the pass."
       @puck_holder = receiver
       @shooting_chance += 1
@@ -112,8 +110,8 @@ class Game
     @stream << @puck_holder.name + " takes a shot!"
 
     unless @shooting_chance < 5 and
-        try_block_shot @team_without_puck.roster[@prng.rand(2) == 0 ? :ldef : :rdef] or
-        try_block_shot @team_without_puck.roster[:goalie]
+        try_block_shot @puckless_team.roster[@prng.rand(2) == 0 ? :ldef : :rdef] or
+        try_block_shot @puckless_team.roster[:goalie]
       @stream << @puck_holder.name + " scores!"
       @score[@team_with_puck == @home ? :home : :away] += 1
       report_score
@@ -147,8 +145,10 @@ class Game
     false
   end
 
-  def non_goalie_opponent
-    @team_without_puck.roster[:non_goalies].sample random: @prng
+  def puckless_non_goalie team = @puckless_team
+    team.roster.values.select do |p|
+      p != team.roster[:goalie] and p != @puck_holder
+    end.sample random: @prng
   end
 end
 

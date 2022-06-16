@@ -21,8 +21,16 @@ class Player
     10.times do
       next_letters = NamesMarkovChain[combination]
       break if next_letters == nil
-      next_letter = next_letters.sample random: @@prng
+
+      cumulative_weights = []
+      next_letters.values.each do |v|
+        cumulative_weights << v + (cumulative_weights.last or 0)
+      end
+      rand_num = @@prng.rand cumulative_weights.last
+
+      next_letter = next_letters.keys[cumulative_weights.index do |n| rand_num < n end]
       break if next_letter == "_"
+
       result += next_letter
       combination = combination[1] + next_letter
     end

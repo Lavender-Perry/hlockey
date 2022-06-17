@@ -1,3 +1,7 @@
 # Hlockey
-Wacky Hockey sports sim inspired by [Blaseball](https://blaseball.com)
+Hockey sports sim.
+
+## Inspirations
+* (Blaseball)[https://blaseball.com]
+* (Alt League Blaseball)[https://github.com/themixedmaster/alt-league-blaseball]
 

@@ -25,7 +25,7 @@ class League
         Team.new("Cape Town Transplants", "🌱"),
         Team.new("Nagqu Paint", "🎨"),
         Team.new("Manbij Fish", "🐠"),
-        Team.new("Nice Backflippers", "🔁"),
+        Team.new("Nice Backflippers", "🔄"),
         Team.new("Orcadas Base Fog", "🌁")
       ],
       "Dry Cool": [

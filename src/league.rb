@@ -23,8 +23,8 @@ class League
       ],
       "Wet Cool": [
         Team.new("Cape Town Transplants", "🌱"),
-        Team.new("Nagqu Paint", "🎨"),
         Team.new("Manbij Fish", "🐠"),
+        Team.new("Nagqu Paint", "🎨"),
         Team.new("Nice Backflippers", "🔄"),
         Team.new("Orcadas Base Fog", "🌁")
       ],

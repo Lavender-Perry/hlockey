@@ -1,10 +1,11 @@
 class Game
-  attr_accessor :home, :away, :stream, :in_progress
+  attr_accessor :title, :stream, :in_progress
 
   def initialize home, away, prng
-    @home, @away, @prng = [home, away, prng]
+    @title = "#{home.emoji} #{home.name} vs #{away.name} #{away.emoji}"
     @stream = ["*whistle blow*"]
     @in_progress = true
+    @home, @away, @prng = [home, away, prng]
     @score = {
       :home => 0,
       :away => 0

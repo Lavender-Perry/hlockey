@@ -32,7 +32,7 @@ class Messages
     when :StartOfPeriod
       "Start" + of_period
     when :EndOfPeriod
-      "End" + of_period + report_score
+      "End" + of_period + score
     when :FaceOff
       @winning_player + " wins the faceoff!"
     when :Hit
@@ -42,7 +42,7 @@ class Messages
         "... intercepted by #{@interceptor}!" : ".")}"
     when :Shoot
       "#{@shooter} takes a shot... #{@blocker ?
-        "#{@blocker} blocks the shot#{takes}!" : "and scores!\n" + report_score}" 
+        "#{@blocker} blocks the shot#{takes}!" : "and scores!" + score}" 
     else
       raise "Unknown message"
     end
@@ -51,6 +51,10 @@ class Messages
   private
   def of_period
     " of period #{@period}."
+  end
+
+  def score
+    "\n#{@home} #{@home_score}, #{@away} #{@away_score}"
   end
 
   def takes

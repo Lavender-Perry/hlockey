@@ -1,7 +1,7 @@
 require_relative "./player.rb"
 
 class Team
-  attr_accessor :name, :emoji, :wins, :losses, :roster
+  attr_reader :name, :emoji, :wins, :losses, :roster
   def initialize name, emoji, roster_idxs = {:lwing  => 0,
                                              :center => 1,
                                              :rwing  => 2,

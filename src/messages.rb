@@ -39,7 +39,7 @@ class Messages
       "#{@defender} hits #{@puck_holder + takes}!"
     when :Pass
       "#{@sender} passes to #{@receiver}#{@interceptor ?
-        "... intercepted by #{@interceptor}!" : ".")}"
+        "... intercepted by #{@interceptor}!" : "."}"
     when :Shoot
       "#{@shooter} takes a shot... #{@blocker ?
         "#{@blocker} blocks the shot#{takes}!" : "and scores!" + score}" 

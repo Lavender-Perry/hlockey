@@ -1,11 +1,5 @@
 require_relative "./league.rb"
 
-season = 0
-league = League.new season
-season_start_time = Time.utc 2022, 6, 20, 17
-last_update_time = season_start_time
-passed_actions = 0
-
 def menu_input default, *choices
   puts "Please enter a number..."
   choices.each_with_index do |choice, i|
@@ -16,20 +10,11 @@ def menu_input default, *choices
   gets.to_i
 end
 
+season = 0
+league = League.new season, Time.utc(2022, 6, 20, 17)
+
 loop do
-  now = Time.now
-  five_sec_intervals = (now - last_update_time).floor / 5
-  if five_sec_intervals > 0
-    five_sec_intervals.times do |i|
-      if (i + passed_actions) % 720 == 0
-        league.new_games
-      else
-        league.update
-      end
-    end
-    last_update_time = now
-    passed_actions += five_sec_intervals
-  end
+  league.update_state
 
   puts "Season #{season} day #{league.day}"
 
@@ -42,25 +27,40 @@ loop do
 
     game_titles = league.games_in_progress.map do |game| game.title end
 
-    if 1 <= menu_input("Back", game_titles) <= game_titles.length
-      # TODO: watching the game
+    game_idx = menu_input("Back", game_titles) - 1
+    if 0 <= game_idx < game_titles.length
+      game = league.games_in_progress[game_idx]
+      loop do
+        league.update_state
+
+        game.stream.each do |message|
+          puts message
+        end
+
+        break unless game.in_progress
+
+        game.stream.clear
+        sleep 5
+      end
     end
   when 2 # Standings
     league.divisions.each do |name, teams|
       puts name
       teams.sort do |a, b| a.wins - a.losses <=> b.wins - b.losses end.each do |team|
-        puts "    #{team.emoji} #{team.name.ljust 24} #{team.wins}-#{team.losses}"
+        puts "  #{team.emoji} #{team.name.ljust 24} #{team.wins}-#{team.losses}"
       end
     end
   when 3 # Rosters
     league.divisions.values.reduce(:+).each do |team|
       puts "#{team.emoji} #{team.name}"
       team.roster.each do |pos, player|
-        puts "    #{pos.to_s.ljust 6}: #{player.name}"
-        # TODO: put stats
+        puts "  #{pos.to_s.ljust 6}: #{player.name}"
+        player.stats.each do |stat, value|
+          puts "    #{stat}: #{value.round 1}"
+        end
       end
     end
-  else   # Exit
+  else
     exit
   end
 end

@@ -2,9 +2,9 @@ require_relative "./game.rb"
 require_relative "./team.rb"
 
 class League
-  attr_accessor :day, :divisions, :games_in_progress
+  attr_reader :day, :divisions, :games_in_progress
 
-  def initialize season
+  def initialize season, start_time
     @day = 0
     @divisions = {
       "Wet Warm": [
@@ -38,11 +38,31 @@ class League
     }
     @games_in_progress = []
     @games = []
+    @last_update_time = start_time
+    @passed_updates = 0
     @prng = Random.new 69420 * season
     @shuffled_teams = @divisions.values.reduce(:+).shuffle random: @prng
     @game_in_matchup = 3
   end
 
+  def update_state
+    now = Time.now
+    five_sec_intervals = (now - @last_update_time).floor / 5
+
+    if five_sec_intervals > 0
+      five_sec_intervals.times do |i|
+        if (i + @passed_updates) % 720 == 0
+          new_games
+        else
+          update_games
+        end
+      end
+      @last_update_time = now
+      @passed_updates += five_sec_intervals
+    end
+  end
+
+  private
   def new_games
     if @game_in_matchup == 3
       @game_in_matchup = 1
@@ -62,7 +82,7 @@ class League
     @game_in_matchup += 1
   end
 
-  def update
+  def update_games
     @games_in_progress = @games.select do |game| game.in_progress end
     @games_in_progress.each do |game| game.update end
   end

@@ -1,15 +1,15 @@
 require_relative "./data/names_markov_chain.rb"
 
 class Player
-  attr_accessor :name, :offense, :defense, :agility
+  attr_reader :name, :stats
 
   @@prng = Random.new 8010897121101114 # This never changes
 
   def initialize
     @name = random_name + " " + random_name
-    @offense = @@prng.rand * 5
-    @defense = @@prng.rand * 5
-    @agility = @@prng.rand * 5
+    @stats = [:offense, :defense, :agility].each_with_object Hash.new do |stat, hash|
+      hash[stat] = @@prng.rand * 5
+    end
   end
 
   private
@@ -20,7 +20,7 @@ class Player
 
     10.times do
       next_letters = NamesMarkovChain[combination]
-      break if next_letters == nil
+      break if next_letters.nil?
 
       cumulative_weights = []
       next_letters.values.each do |v|

@@ -11,7 +11,7 @@ def menu_input default, *choices
 end
 
 season = 0
-league = League.new season, Time.utc(2022, 6, 20, 17)
+league = League.new season, Time.utc(2022, 6, 27, 17)
 
 loop do
   league.update_state

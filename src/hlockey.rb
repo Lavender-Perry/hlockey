@@ -1,4 +1,5 @@
 require_relative "./league.rb"
+require_relative "./team.rb"
 
 def menu_input default, *choices
   puts "Please enter a number..."
@@ -11,7 +12,14 @@ def menu_input default, *choices
 end
 
 season = 0
-league = League.new season, Time.utc(2022, 6, 27, 17)
+start_time = Time.utc(2022, 6, 27, 17).localtime
+
+if Time.now < start_time
+  puts start_time.strftime "Season #{season} will start at %H:%M on %A, %B %d."
+  exit
+end
+
+league = League.new season, start_time
 
 loop do
   league.update_state
@@ -33,9 +41,7 @@ loop do
       loop do
         league.update_state
 
-        game.stream.each do |message|
-          puts message
-        end
+        game.stream.each &method(:puts)
 
         break unless game.in_progress
 
@@ -44,11 +50,20 @@ loop do
       end
     end
   when 2 # Standings
+    print_in_standings = Proc.new do |team|
+      puts "  #{team.emoji} #{team.name.ljust 24} #{team.wins}-#{team.losses}"
+    end
+
+    if league.champion_team
+      puts "Your season #{season} champions are the #{champion_team.name}!"
+    elsif league.playoff_teams
+      puts "Playoffs"
+      league.playoff_teams.each &print_in_standings
+    end
+
     league.divisions.each do |name, teams|
       puts name
-      teams.sort do |a, b| a.wins - a.losses <=> b.wins - b.losses end.each do |team|
-        puts "  #{team.emoji} #{team.name.ljust 24} #{team.wins}-#{team.losses}"
-      end
+      Team.sort_teams(teams).each &print_in_standings
     end
   when 3 # Rosters
     league.divisions.values.reduce(:+).each do |team|

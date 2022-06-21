@@ -1,5 +1,6 @@
 # Hlockey
-Hockey sports sim.
+Hockey sports sim.\
+Join [the Discord server](https://discord.gg/hQMRZyexUB) to chat or for support.
 
 ## Installation Instructions
 1. Get Ruby if you do not already have it ([instructions](https://www.ruby-lang.org/en/downloads/))

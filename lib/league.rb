@@ -1,8 +1,8 @@
-require_relative "./game.rb"
-require_relative "./team.rb"
+require_relative "./game"
+require_relative "./team"
 
 class League
-  attr_reader :day, :divisions, :games_in_progress, :champion_team
+  attr_reader :day, :divisions, :games_in_progress, :playoff_teams, :champion_team
 
   def initialize season, start_time
     @day = 0

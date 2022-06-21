@@ -1,4 +1,4 @@
-require_relative "./data/names_markov_chain.rb"
+require_relative "./data/names_markov_chain"
 
 class Player
   attr_reader :name, :stats

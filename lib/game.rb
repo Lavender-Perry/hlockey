@@ -1,11 +1,10 @@
-require_relative "./messages.rb"
+require_relative "./messages"
 
 class Game
-  attr_reader :title, :stream, :in_progress
+  attr_reader :stream, :in_progress
 
   def initialize home, away, prng
-    @title = "#{home.emoji} #{home.name} vs #{away.name} #{away.emoji}"
-    @stream = [Messages.StartOfGame(@title)]
+    @stream = [Messages.StartOfGame(to_s)]
     @in_progress = true
     @home, @away, @prng = [home, away, prng]
     @score = {
@@ -19,6 +18,10 @@ class Game
     @puckless_team = nil
     @puck_holder = nil
     @shooting_chance = 0
+  end
+
+  def to_s
+    puts "#{home.emoji} #{home.name} vs #{away.name} #{away.emoji}"
   end
 
   def update

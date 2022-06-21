@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative "./lib/league"
-require_relative "./lib/team"
+require_relative "../lib/league"
+require_relative "../lib/team"
 
 def menu_input default, *choices
   puts "Please enter a number..."

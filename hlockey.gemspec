@@ -1,12 +1,14 @@
-Gem::Specification.new do |spec|
-  spec.name = "hlockey"
-  spec.version = "0"
-  spec.summary = "Hlockey season #{spec.version}."
-  spec.description = "Hockey sports sim."
-  spec.authors = ["Lavender Perry"]
-  spec.email = "endie2@protonmail.com"
-  spec.files = Dir["lib/**/*"]
-  spec.executables = ["hlockey.rb"]
-  spec.bindir = "."
+Gem::Specification.new do |s|
+  s.name = "hlockey"
+  s.version = "0"
+  s.summary = "Hlockey season #{s.version}."
+  s.description = "Hockey sports sim."
+  s.authors = ["Lavender Perry"]
+  s.email = "endie2@protonmail.com"
+  s.license = "LicenseRef-LICENSE.md"
+  s.homepage = "https://github.com/Lavender-Perry/hlockey"
+  s.metadata = {"source_code_uri" => s.homepage}
+  s.files = Dir["lib/**/*"]
+  s.executables = ["hlockey"]
 end
 

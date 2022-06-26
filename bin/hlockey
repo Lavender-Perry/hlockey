@@ -21,7 +21,7 @@ def menu_input_elem default, choices
   choices[i] unless i < 0
 end
 
-season = 0
+season = 0.1
 start_time = Time.utc(2022, 6, 27, 17).localtime
 league = League.new season, start_time
 
@@ -56,7 +56,7 @@ loop do
     end
   when 1 # Standings
     if league.champion_team
-      puts "Your season #{season} champions are the #{champion_team.name}!"
+      puts "Your season #{season} champions are the #{league.champion_team.name}!"
     elsif league.playoff_teams
       puts "Playoffs"
       league.playoff_teams.each &:print_win_loss

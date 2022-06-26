@@ -1,25 +1,27 @@
 class Messages
   def initialize event, fields, data
     @event = event
-    data_fields.zip data do |(f, d)|
-      instance_variable_set "@" + f, d
+    fields.zip data do |(f, d)|
+      instance_variable_set "@" + f.to_s, d
     end
   end
 
   private_class_method :new
 
-  [
-    [:StartOfGame, :title],
-    [:EndOfGame, :winning_team],
-    [:StartOfPeriod, :period],
-    [:EndOfPeriod, :period, :home, :away, :home_score, :away_score],
-    [:FaceOff, :winning_player],
-    [:Hit, :puck_holder, :defender, :puck_taken],
-    [:Pass, :sender, :receiver, :interceptor],
-    [:Shoot, :shooter, :blocker, :puck_taken, :home, :away, :home_score, :away_score]
-  ].each do |event, *fields|
-    define_method event do |*data|
-      new event, fields, data
+  class << self
+    [
+      [:StartOfGame, :title],
+      [:EndOfGame, :winning_team],
+      [:StartOfPeriod, :period],
+      [:EndOfPeriod, :period, :home, :away, :home_score, :away_score],
+      [:FaceOff, :winning_player],
+      [:Hit, :puck_holder, :defender, :puck_taken],
+      [:Pass, :sender, :receiver, :interceptor],
+      [:Shoot, :shooter, :blocker, :puck_taken, :home, :away, :home_score, :away_score]
+    ].each do |event, *fields|
+      define_method event do |*data|
+        new event, fields, data
+      end
     end
   end
 
@@ -34,9 +36,9 @@ class Messages
     when :EndOfPeriod
       "End" + of_period + score
     when :FaceOff
-      @winning_player + " wins the faceoff!"
+      "#{@winning_player} wins the faceoff!"
     when :Hit
-      "#{@defender} hits #{@puck_holder + takes}!"
+      "#{@defender} hits #{@puck_holder.to_s + takes}!"
     when :Pass
       "#{@sender} passes to #{@receiver}#{@interceptor ?
         "... intercepted by #{@interceptor}!" : "."}"

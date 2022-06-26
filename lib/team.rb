@@ -32,7 +32,7 @@ class Team
   def print_roster
     puts to_s
     @roster.each do |pos, player|
-      puts "  #{pos.to_s.ljust 6}: #{player.name}"
+      puts "  #{pos.to_s.ljust 6}: #{player}"
       player.stats.each do |stat, value|
         puts "    #{stat}: #{value.round 1}"
       end
@@ -40,7 +40,7 @@ class Team
   end
 
   def self.sort_teams teams
-    teams.sort do |a, b| a.wins - a.losses <=> b.wins - b.losses end
+    teams.sort do |a, b| b.wins - b.losses <=> a.wins - a.losses end
   end
 end
 

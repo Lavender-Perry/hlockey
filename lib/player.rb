@@ -1,12 +1,12 @@
 require_relative "./data/names_markov_chain"
 
 class Player
-  attr_reader :name, :stats
+  attr_reader :stats, :to_s
 
   @@prng = Random.new 8010897121101114 # This never changes
 
   def initialize
-    @name = random_name + " " + random_name
+    @to_s = random_name + " " + random_name
     @stats = [:offense, :defense, :agility].each_with_object Hash.new do |stat, hash|
       hash[stat] = @@prng.rand * 5
     end

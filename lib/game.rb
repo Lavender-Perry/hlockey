@@ -1,12 +1,12 @@
 require_relative "./messages"
 
 class Game
-  attr_reader :stream, :in_progress
+  attr_reader :home, :away, :stream, :in_progress
 
   def initialize home, away, prng
+    @home, @away, @prng = [home, away, prng]
     @stream = [Messages.StartOfGame(to_s)]
     @in_progress = true
-    @home, @away, @prng = [home, away, prng]
     @score = {
       :home => 0,
       :away => 0
@@ -21,7 +21,7 @@ class Game
   end
 
   def to_s
-    puts "#{home.emoji} #{home.name} vs #{away.name} #{away.emoji}"
+    "#{@home.emoji} #{@home.name} vs #{@away.name} #{@away.emoji}"
   end
 
   def update
@@ -29,6 +29,25 @@ class Game
 
     @stream << Messages.StartOfPeriod(@period) if @actions == 0
     @actions += 1
+
+    if @actions == 60
+      @stream << Messages.EndOfPeriod(@period, @home.name, @away.name, *@score.values)
+      @actions = 0
+      @period += 1
+      start_faceoff
+
+      if @period > 3 and not(@score[:home] == @score[:away] and @period < 12)
+        # Game is over
+        @in_progress = false
+
+        winner, loser = @score[:away] > @score[:home] ? [@away, @home] : [@home, @away]
+
+        @stream << Messages.EndOfGame(winner.name)
+        winner.wins += 1
+        loser.losses += 1
+      end
+      return
+    end
 
     if @face_off
       if @puck_holder == nil
@@ -39,7 +58,7 @@ class Game
                            @away.roster[:center].stats[:offense]) ? @away : @home)
 
         @puck_holder = @team_with_puck.roster[:center]
-        @stream << Messages.FaceOff(@puck_holder.name)
+        @stream << Messages.FaceOff(@puck_holder)
       else
         pass
         @face_off = false
@@ -52,48 +71,21 @@ class Game
       pass
     when 5..6 # Check
       defender = puckless_non_goalie
-      @stream << Messages.Hit(@puck_holder.name, defender.name,
-                              try_take_puck(defender), 0, :defense)
+      @stream << Messages.Hit(@puck_holder, defender,
+                              try_take_puck(defender, 0, :defense))
     else      # Shoot
       unless @shooting_chance < 5 and
           try_block_shot @puckless_team.roster[@prng.rand(2) == 0 ? :ldef : :rdef] or
           try_block_shot @puckless_team.roster[:goalie]
         @score[@team_with_puck == @home ? :home : :away] += 1
 
-        @stream << Messages.Shoot(shooter,
+        @stream << Messages.Shoot(@puck_holder,
                                   nil, false,
                                   @home.name, @away.name,
                                   *@score.values)
 
-        @shooting_chance = 0
-        @face_off = true
+        start_faceoff
         @actions = 60 if @period > 3 # Sudden death overtime
-      end
-    end
-
-    if @actions == 60
-      @stream << Messages.EndOfPeriod(@period, @home.name, @away.name, *@score.values)
-      @actions = 0
-      @period += 1
-      if @period > 3 and not(@score[:home] == @score[:away] and @period < 12)
-        # Game is over
-        @in_progress = false
-
-        winner, loser = case @score[:home] <=> @score[:away]
-                        when 1
-                          [@home, @away]
-                        when -1
-                          [@away, @home]
-                        else # Tie
-                          @stream << Messages.EndOfGame
-                          @home.losses += 1
-                          @away.losses += 1
-                          return
-                        end
-
-        @stream << Messages.EndOfGame(winner.name)
-        winner.wins += 1
-        loser.losses += 1
       end
     end
   end
@@ -103,6 +95,12 @@ class Game
     @prng.rand(10) + helping_stat - hindering_stat > 4
   end
 
+  def start_faceoff
+    @shooting_chance = 0
+    @face_off = true
+    @puck_holder = nil
+  end
+
   def switch_team_with_puck team_with_puck = @team_with_puck
     @team_with_puck, @puckless_team = team_with_puck == @home ?
       [@away, @home] : [@home, @away]
@@ -110,16 +108,16 @@ class Game
   end
 
   def pass
-    sender_name = @puck_holder.name
+    sender = @puck_holder
     receiver = puckless_non_goalie(@team_with_puck)
     interceptor = puckless_non_goalie
 
     if not @face_off and try_take_puck interceptor, 2 # Pass intercepted
-      @stream << Message.Pass(sender_name, receiver.name, interceptor)
+      @stream << Messages.Pass(sender, receiver, interceptor)
       return
     end
 
-    @stream << Message.Pass(sender_name, receiver.name)
+    @stream << Messages.Pass(sender, receiver)
     @puck_holder = receiver
     @shooting_chance += 1
   end
@@ -139,7 +137,7 @@ class Game
                                          @puck_holder.stats[:offense])
 
     @shooting_chance += 1
-    @stream << Message.Shoot(@puck_holder, blocker, try_take_puck(blocker))
+    @stream << Messages.Shoot(@puck_holder, blocker, try_take_puck(blocker))
 
     true
   end

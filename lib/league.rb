@@ -61,7 +61,7 @@ class League
           update_games
         end
 
-        return if @champion_team
+        break if @champion_team
       end
 
       @last_update_time = now
@@ -86,7 +86,7 @@ class League
     case @day <=> 39
     when -1
       (@shuffled_teams.length / 2).times do |i|
-        pair = [@shuffled_teams[i], @shuffled_teams[-i]]
+        pair = [@shuffled_teams[i], @shuffled_teams[-i - 1]]
         @games << Game.new(*(@day > 19 ? pair : pair.reverse), @prng)
       end
 
@@ -95,7 +95,7 @@ class League
       @playoff_teams = Team.sort_teams(
         @divisions.values.map do |teams|
           Team.sort_teams(teams).first(2)
-        end.reduce(:+).map &:copy
+        end.reduce(:+).map &:clone
       )
 
       new_playoff_matchups
@@ -112,7 +112,7 @@ class League
   end
 
   def update_games
-    @games_in_progress = @games.select do |game| game.in_progress end
+    @games_in_progress = @games.select &:in_progress
     @games_in_progress.each do |game| game.update end
   end
 

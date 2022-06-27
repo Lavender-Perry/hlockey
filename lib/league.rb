@@ -1,39 +1,41 @@
-require_relative "./game"
-require_relative "./team"
+# frozen_string_literal: true
+
+require_relative('./game')
+require_relative('./team')
 
 class League
-  attr_reader :day, :divisions, :games_in_progress, :playoff_teams, :champion_team
+  attr_reader(:day, :divisions, :games_in_progress, :playoff_teams, :champion_team)
 
-  def initialize season, start_time
+  def initialize(season, start_time)
     @day = 0
     @divisions = {
-      "Wet Warm": [
-        Team.new("Antalya Pirates", "🌊"),
-        Team.new("Baden Hallucinations", "🍄"),
-        Team.new("Kópavogur Seals", "🦭"),
-        Team.new("Lagos Soup", "🥣"),
-        Team.new("Pica Acid", "🧪")
+      'Wet Warm': [
+        Team.new('Antalya Pirates', '🌊'),
+        Team.new('Baden Hallucinations', '🍄'),
+        Team.new('Kópavogur Seals', '🦭'),
+        Team.new('Lagos Soup', '🥣'),
+        Team.new('Pica Acid', '🧪')
       ],
-      "Dry Warm": [
-        Team.new("Dawson City Impostors", "🔪"),
-        Team.new("Erlangen Ohms", "🇴"),
-        Team.new("Pompei Eruptions", "🌋"),
-        Team.new("Rio de Janeiro Directors", "🎦"),
-        Team.new("Wyrzysk Rockets", "🚀")
+      'Dry Warm': [
+        Team.new('Dawson City Impostors', '🔪'),
+        Team.new('Erlangen Ohms', '🇴'),
+        Team.new('Pompei Eruptions', '🌋'),
+        Team.new('Rio de Janeiro Directors', '🎦'),
+        Team.new('Wyrzysk Rockets', '🚀')
       ],
-      "Wet Cool": [
-        Team.new("Cape Town Transplants", "🌱"),
-        Team.new("Manbij Fish", "🐠"),
-        Team.new("Nagqu Paint", "🎨"),
-        Team.new("Nice Backflippers", "🔄"),
-        Team.new("Orcadas Base Fog", "🌁")
+      'Wet Cool': [
+        Team.new('Cape Town Transplants', '🌱'),
+        Team.new('Manbij Fish', '🐠'),
+        Team.new('Nagqu Paint', '🎨'),
+        Team.new('Nice Backflippers', '🔄'),
+        Team.new('Orcadas Base Fog', '🌁')
       ],
-      "Dry Cool": [
-        Team.new("Baghdad Abacuses", "🧮"),
-        Team.new("Jakarta Architects", "📐"),
-        Team.new("Kyoto Payphones", "📳"),
-        Team.new("Stony Brook Reapers", "💀"),
-        Team.new("Sydney Thinkers", "🤔")
+      'Dry Cool': [
+        Team.new('Baghdad Abacuses', '🧮'),
+        Team.new('Jakarta Architects', '📐'),
+        Team.new('Kyoto Payphones', '📳'),
+        Team.new('Stony Brook Reapers', '💀'),
+        Team.new('Sydney Thinkers', '🤔')
       ]
     }
     @games_in_progress = []
@@ -41,8 +43,8 @@ class League
     @champion_team = nil
     @last_update_time = start_time
     @passed_updates = 0
-    @prng = Random.new 69420 * season
-    @shuffled_teams = @divisions.values.reduce(:+).shuffle random: @prng
+    @prng = Random.new(69_420 * season)
+    @shuffled_teams = @divisions.values.reduce(:+).shuffle(random: @prng)
     @playoff_teams = nil
     @game_in_matchup = 3
   end
@@ -53,27 +55,28 @@ class League
     now = Time.now
     five_sec_intervals = (now - @last_update_time).floor / 5
 
-    if five_sec_intervals > 0
-      five_sec_intervals.times do |i|
-        if (i + @passed_updates) % 720 == 0
-          new_games
-        else
-          update_games
-        end
+    return unless five_sec_intervals.positive?
 
-        break if @champion_team
+    five_sec_intervals.times do |i|
+      if ((i + @passed_updates) % 720).zero?
+        new_games
+      else
+        update_games
       end
 
-      @last_update_time = now
-      @passed_updates += five_sec_intervals
+      break if @champion_team
     end
+
+    @last_update_time = now
+    @passed_updates += five_sec_intervals
   end
 
   private
+
   def new_games
     if @game_in_matchup != (@day > 38 ? 5 : 3)
       # New game in matchups
-      @games.map! do |game| Game.new(game.away, game.home, @prng) end
+      @games.map! { |game| Game.new(game.away, game.home, @prng) }
       @game_in_matchup += 1
       return
     end
@@ -95,7 +98,7 @@ class League
       @playoff_teams = Team.sort_teams(
         @divisions.values.map do |teams|
           Team.sort_teams(teams).first(2)
-        end.reduce(:+).map &:clone
+        end.reduce(:+).map(&:clone)
       )
 
       new_playoff_matchups
@@ -112,8 +115,8 @@ class League
   end
 
   def update_games
-    @games_in_progress = @games.select &:in_progress
-    @games_in_progress.each do |game| game.update end
+    @games_in_progress = @games.select(&:in_progress)
+    @games_in_progress.each(&:update)
   end
 
   def new_playoff_matchups
@@ -122,9 +125,8 @@ class League
       team.losses = 0
     end
 
-    (0...@playoff_teams.length).step 2 do |i|
+    (0...@playoff_teams.length).step(2) do |i|
       @games << Game.new(*@playoff_teams[i, 2], @prng)
     end
   end
 end
-

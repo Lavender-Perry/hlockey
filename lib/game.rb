@@ -1,16 +1,17 @@
-require_relative "./messages"
+# frozen_string_literal: true
+
+require_relative('./messages')
 
 class Game
-  attr_reader :home, :away, :stream, :in_progress
+  attr_reader(:home, :away, :stream, :in_progress)
 
-  def initialize home, away, prng
-    @home, @away, @prng = [home, away, prng]
+  def initialize(home, away, prng)
+    @home = home
+    @away = away
+    @prng = prng
     @stream = [Messages.StartOfGame(to_s)]
     @in_progress = true
-    @score = {
-      :home => 0,
-      :away => 0
-    }
+    @score = { home: 0, away: 0 }
     @actions = 0
     @period = 1
     @face_off = true
@@ -27,7 +28,7 @@ class Game
   def update
     return unless @in_progress
 
-    @stream << Messages.StartOfPeriod(@period) if @actions == 0
+    @stream << Messages.StartOfPeriod(@period) if @actions.zero?
     @actions += 1
 
     if @actions == 60
@@ -36,7 +37,7 @@ class Game
       @period += 1
       start_faceoff
 
-      if @period > 3 and not(@score[:home] == @score[:away] and @period < 12)
+      if @period > 3 && !(@score[:home] == @score[:away] && @period < 12)
         # Game is over
         @in_progress = false
 
@@ -50,12 +51,15 @@ class Game
     end
 
     if @face_off
-      if @puck_holder == nil
+      if @puck_holder.nil?
         # Pass opposite team to who wins the puck to switch_team_with_puck,
         # so @team_with_puck & @puckless_team are set to the correct values.
-        switch_team_with_puck(
-          action_succeeds?(@home.roster[:center].stats[:offense],
-                           @away.roster[:center].stats[:offense]) ? @away : @home)
+        switch_team_with_puck(if action_succeeds?(@home.roster[:center].stats[:offense],
+                                                  @away.roster[:center].stats[:offense])
+                                @away
+                              else
+                                @home
+                              end)
 
         @puck_holder = @team_with_puck.roster[:center]
         @stream << Messages.FaceOff(@puck_holder)
@@ -74,9 +78,9 @@ class Game
       @stream << Messages.Hit(@puck_holder, defender,
                               try_take_puck(defender, 0, :defense))
     else      # Shoot
-      unless @shooting_chance < 5 and
-          try_block_shot @puckless_team.roster[@prng.rand(2) == 0 ? :ldef : :rdef] or
-          try_block_shot @puckless_team.roster[:goalie]
+      unless @shooting_chance < 5 &&
+             try_block_shot(@puckless_team.roster[@prng.rand(2).zero? ? :ldef : :rdef]) ||
+             try_block_shot(@puckless_team.roster[:goalie])
         @score[@team_with_puck == @home ? :home : :away] += 1
 
         @stream << Messages.Shoot(@puck_holder,
@@ -91,7 +95,8 @@ class Game
   end
 
   private
-  def action_succeeds? helping_stat, hindering_stat
+
+  def action_succeeds?(helping_stat, hindering_stat)
     @prng.rand(10) + helping_stat - hindering_stat > 4
   end
 
@@ -101,9 +106,12 @@ class Game
     @puck_holder = nil
   end
 
-  def switch_team_with_puck team_with_puck = @team_with_puck
-    @team_with_puck, @puckless_team = team_with_puck == @home ?
-      [@away, @home] : [@home, @away]
+  def switch_team_with_puck(team_with_puck = @team_with_puck)
+    @team_with_puck, @puckless_team = if team_with_puck == @home
+                                        [@away, @home]
+                                      else
+                                        [@home, @away]
+                                      end
     @shooting_chance = 0
   end
 
@@ -112,7 +120,7 @@ class Game
     receiver = puckless_non_goalie(@team_with_puck)
     interceptor = puckless_non_goalie
 
-    if not @face_off and try_take_puck interceptor, 2 # Pass intercepted
+    if !@face_off && try_take_puck(interceptor, 2) # Pass intercepted
       @stream << Messages.Pass(sender, receiver, interceptor)
       return
     end
@@ -122,7 +130,7 @@ class Game
     @shooting_chance += 1
   end
 
-  def try_take_puck player, dis = 0, stat = :agility
+  def try_take_puck(player, dis = 0, stat = :agility)
     return false unless action_succeeds?(player.stats[stat] - dis,
                                          @puck_holder.stats[stat])
 
@@ -132,7 +140,7 @@ class Game
     true
   end
 
-  def try_block_shot blocker
+  def try_block_shot(blocker)
     return false unless action_succeeds?(blocker.stats[:defense],
                                          @puck_holder.stats[:offense])
 
@@ -142,10 +150,9 @@ class Game
     true
   end
 
-  def puckless_non_goalie team = @puckless_team
+  def puckless_non_goalie(team = @puckless_team)
     team.roster.values.select do |p|
       p != team.roster[:goalie] and p != @puck_holder
-    end.sample random: @prng
+    end.sample(random: @prng)
   end
 end
-

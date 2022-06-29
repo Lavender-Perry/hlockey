@@ -89,7 +89,7 @@ class Game
                                   *@score.values)
 
         start_faceoff
-        @actions = 60 if @period > 3 # Sudden death overtime
+        @actions = 59 if @period > 3 # Sudden death overtime
       end
     end
   end

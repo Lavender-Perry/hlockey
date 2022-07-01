@@ -120,7 +120,7 @@ class Game
     receiver = puckless_non_goalie(@team_with_puck)
     interceptor = puckless_non_goalie
 
-    if !@face_off && try_take_puck(interceptor, 2) # Pass intercepted
+    if !@face_off && try_take_puck(interceptor, 4) # Pass intercepted
       @stream << Messages.Pass(sender, receiver, interceptor)
       return
     end

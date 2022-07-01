@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Season
-  NUMBER = 0.1
-  START_TIME = Time.utc(2022, 6, 27, 17).localtime.freeze
+  NUMBER = 1
+  START_TIME = Time.utc(2022, 7, 4, 17).localtime.freeze
   ELECTION = {
     'Bribery': {
       'Eat More RAM': 'Add an online interface to the league.',
@@ -23,4 +23,5 @@ module Season
       'Big Gamble': 'All your team\'s stats go up or down by 1.0 at random.'
     }
   }.freeze
+  ELECTION_FORM = 'https://forms.gle/saLp3ucxg2ERsY9L7'
 end

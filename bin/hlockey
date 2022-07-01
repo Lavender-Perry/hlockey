@@ -57,7 +57,8 @@ loop do
     end
   when 1 # Standings
     if league.champion_team
-      puts("Your season #{Season::NUMBER} champions are the #{league.champion_team.name}!")
+      puts("Your season #{Season::NUMBER} champions are the "\
+           "#{league.champion_team.name}!")
     elsif league.playoff_teams
       puts('Playoffs')
       league.playoff_teams.each(&:print_win_loss)
@@ -81,6 +82,8 @@ loop do
       puts(category)
       options.each { |name, description| puts("  #{name}: #{description}") }
     end
+    puts("Go to #{Season::ELECTION_FORM} to vote.\n"\
+         "If you don't want to use Google Forms, DM me on Discord (Lavender#9223).")
   else
     exit
   end

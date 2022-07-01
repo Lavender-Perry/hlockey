@@ -21,7 +21,7 @@ class League
     end
 
     def print_roster
-      puts(@to_s)
+      puts(to_s)
       @roster.each do |pos, player|
         puts("  #{pos.to_s.ljust(6)}: #{player}")
         player.stats.each { |stat, value| puts("    #{stat}: #{value.round 1}") }

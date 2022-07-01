@@ -1,43 +1,45 @@
 # frozen_string_literal: true
 
+require('yaml')
 require_relative('./game')
-require_relative('./team')
 
 class League
-  attr_reader(:day, :divisions, :games_in_progress, :playoff_teams, :champion_team)
+  attr_reader(:divisions, :day, :games_in_progress, :playoff_teams, :champion_team)
+
+  class Team
+    private_class_method(:new)
+
+    attr_accessor(:wins, :losses)
+    attr_reader(:name, :emoji, :roster)
+
+    def to_s
+      "#{@emoji} #{@name}"
+    end
+
+    def print_win_loss
+      puts("  #{to_s.ljust 26} #{@wins}-#{@losses}")
+    end
+
+    def print_roster
+      puts(@to_s)
+      @roster.each do |pos, player|
+        puts("  #{pos.to_s.ljust(6)}: #{player}")
+        player.stats.each { |stat, value| puts("    #{stat}: #{value.round 1}") }
+      end
+    end
+
+    def self.sort(teams)
+      teams.sort { |a, b| b.wins - b.losses <=> a.wins - a.losses }
+    end
+  end
 
   def initialize(season, start_time)
+    # The YAML file is included with the program,
+    # so this is as safe as anything else
+    @divisions = YAML.unsafe_load_file(File.expand_path('data/divisions.yaml',
+                                                        File.dirname(__FILE__)))
+
     @day = 0
-    @divisions = {
-      'Wet Warm': [
-        Team.new('Antalya Pirates', '🌊'),
-        Team.new('Baden Hallucinations', '🍄'),
-        Team.new('Kópavogur Seals', '🦭'),
-        Team.new('Lagos Soup', '🥣'),
-        Team.new('Pica Acid', '🧪')
-      ],
-      'Dry Warm': [
-        Team.new('Dawson City Impostors', '🔪'),
-        Team.new('Erlangen Ohms', '🇴'),
-        Team.new('Pompei Eruptions', '🌋'),
-        Team.new('Rio de Janeiro Directors', '🎦'),
-        Team.new('Wyrzysk Rockets', '🚀')
-      ],
-      'Wet Cool': [
-        Team.new('Cape Town Transplants', '🌱'),
-        Team.new('Manbij Fish', '🐠'),
-        Team.new('Nagqu Paint', '🎨'),
-        Team.new('Nice Backflippers', '🔄'),
-        Team.new('Orcadas Base Fog', '🌁')
-      ],
-      'Dry Cool': [
-        Team.new('Baghdad Abacuses', '🧮'),
-        Team.new('Jakarta Architects', '📐'),
-        Team.new('Kyoto Payphones', '📳'),
-        Team.new('Stony Brook Reapers', '💀'),
-        Team.new('Sydney Thinkers', '🤔')
-      ]
-    }
     @games_in_progress = []
     @games = []
     @champion_team = nil
@@ -52,8 +54,8 @@ class League
   def update_state
     return if @champion_team
 
-    now = Time.now
-    five_sec_intervals = (now - @last_update_time).floor / 5
+    now = Time.at(Time.now.to_i)
+    five_sec_intervals = (now - @last_update_time).div(5)
 
     return unless five_sec_intervals.positive?
 
@@ -95,15 +97,15 @@ class League
 
       @shuffled_teams.insert 1, @shuffled_teams.pop
     when 0
-      @playoff_teams = Team.sort_teams(
+      @playoff_teams = Team.sort(
         @divisions.values.map do |teams|
-          Team.sort_teams(teams).first(2)
-        end.reduce(:+).map(&:clone)
-      )
+          Team.sort(teams).first(2)
+        end.reduce(:+)
+      ).map(&:clone)
 
       new_playoff_matchups
     when 1
-      @playoff_teams = Team.sort_teams(@playoff_teams).first(@playoff_teams.length / 2)
+      @playoff_teams = Team.sort(@playoff_teams).first(@playoff_teams.length / 2)
 
       if @playoff_teams.length == 1
         @champion_team = @playoff_teams[0]
@@ -115,8 +117,8 @@ class League
   end
 
   def update_games
-    @games_in_progress = @games.select(&:in_progress)
     @games_in_progress.each(&:update)
+    @games_in_progress = @games.select(&:in_progress)
   end
 
   def new_playoff_matchups
@@ -128,5 +130,11 @@ class League
     (0...@playoff_teams.length).step(2) do |i|
       @games << Game.new(*@playoff_teams[i, 2], @prng)
     end
+  end
+
+  class Player
+    private_class_method(:new)
+
+    attr_reader(:stats, :to_s)
   end
 end

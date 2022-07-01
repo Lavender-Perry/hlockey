@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 require_relative('../lib/league')
-require_relative('../lib/team')
+require_relative('../lib/data/season')
 
 def menu_input(default, *choices)
   puts('Please enter a number...')
@@ -22,21 +22,20 @@ def menu_input_elem(default, choices)
   choices[i] unless i.negative?
 end
 
-season = 0.1
-start_time = Time.utc(2022, 6, 27, 17).localtime
-league = League.new(season, start_time)
+PUTS = method(:puts)
+league = League.new(Season::NUMBER, Season::START_TIME)
 
-if Time.now < start_time
-  puts start_time
-    .strftime("Season #{season} starts at %H:%M on %A, %B %d.")
+if Time.now < Season::START_TIME
+  puts Season::START_TIME
+    .strftime("Season #{Season::NUMBER} starts at %H:%M on %A, %B %d.")
 end
 
 loop do
   league.update_state
 
-  puts("Season #{season} day #{league.day}")
+  puts("Season #{Season::NUMBER} day #{league.day}")
 
-  case menu_input('Exit', 'Games', 'Standings', 'Rosters')
+  case menu_input('Exit', 'Games', 'Standings', 'Rosters', 'Election')
   when 0 # Games
     if league.games_in_progress.empty?
       puts('There are currently no games being played.')
@@ -49,7 +48,7 @@ loop do
     loop do
       league.update_state
 
-      game.stream.each(&method(:puts))
+      game.stream.each(&PUTS)
 
       break unless game.in_progress
 
@@ -58,7 +57,7 @@ loop do
     end
   when 1 # Standings
     if league.champion_team
-      puts("Your season #{season} champions are the #{league.champion_team.name}!")
+      puts("Your season #{Season::NUMBER} champions are the #{league.champion_team.name}!")
     elsif league.playoff_teams
       puts('Playoffs')
       league.playoff_teams.each(&:print_win_loss)
@@ -66,7 +65,7 @@ loop do
 
     league.divisions.each do |name, teams|
       puts(name)
-      Team.sort_teams(teams).each(&:print_win_loss)
+      League::Team.sort(teams).each(&:print_win_loss)
     end
   when 2 # Rosters
     teams = league.divisions.values.reduce(:+)
@@ -77,6 +76,11 @@ loop do
       next
     end
     team.print_roster
+  when 3 # Election
+    Season::ELECTION.each do |category, options|
+      puts(category)
+      options.each { |name, description| puts("  #{name}: #{description}") }
+    end
   else
     exit
   end

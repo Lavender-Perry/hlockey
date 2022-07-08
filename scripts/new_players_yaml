@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+# Generates YAML data for new players
+# First argument is amount of players to generate, must be integer > 0, defaults to 1
+
+require('open-uri')
+
+names_file = 'https://raw.githubusercontent.com/smashew/NameDatabases/master/NamesDatabases/first%20names/us.txt'
+
+NAMES_MARKOV_CHAIN = URI.parse(names_file).open.each_with_object({}) do |name, h|
+  name = "__#{name.chomp}__"
+  (name.length - 3).times do |i|
+    combination = name[i, 2]
+    next_letter = name[i + 2]
+    h[combination] ||= {}
+    h[combination][next_letter] ||= 0
+    h[combination][next_letter] += 1
+  end
+end.freeze
+
+def random_name
+  combination = '__'
+  next_letter = ''
+  result = ''
+
+  10.times do
+    next_letters = NAMES_MARKOV_CHAIN[combination]
+    break if next_letters.nil?
+
+    cumulative_weights = []
+    next_letters.each_value do |v|
+      cumulative_weights << v + (cumulative_weights.last or 0)
+    end
+    rand_num = rand(cumulative_weights.last)
+
+    next_letter = next_letters.keys[cumulative_weights.index { |n| rand_num < n }]
+    break if next_letter == '_'
+
+    result += next_letter
+    combination = combination[1] + next_letter
+  end
+
+  result
+end
+
+player_amount = ARGV[0].to_i
+player_amount = 1 if player_amount < 1
+
+player_amount.times do
+  puts(
+  <<-PLAYER
+!ruby/object:League::Player
+  to_s: #{random_name} #{random_name}
+  stats:
+    :offense: #{rand * 5}
+    :defense: #{rand * 5}
+    :agility: #{rand * 5}
+  PLAYER
+  )
+end

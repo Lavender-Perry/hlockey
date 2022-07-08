@@ -14,3 +14,6 @@ If you do, you can run it (if you have Ruby installed) with `bin/hlockey`, or `r
 * [Blaseball](https://blaseball.com)
 * [Alt League Blaseball](https://github.com/themixedmaster/alt-league-blaseball)
 * [Albatross](https://github.com/qt-dork/albatross)
+
+## Credits
+* [NameDatabases](https://github.com/smashew/NameDatabases) is used for generating player names

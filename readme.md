@@ -8,10 +8,9 @@ Join [the Discord server](https://discord.gg/hQMRZyexUB) to chat or for support.
 3. Start the program by running `hlockey` in the terminal/command prompt.
 
 If you want to modify the code, you can download it from releases or clone it directly.\
-If you do, you can run it (if you have Ruby installed) with `bin/hlockey`, or `run.bat` on Windows.
+If you do, you can run it (if you have Ruby installed) with `bin/hlockey`, or `ruby bin/hlockey`.
 
 ## Inspirations
 * [Blaseball](https://blaseball.com)
 * [Alt League Blaseball](https://github.com/themixedmaster/alt-league-blaseball)
 * [Albatross](https://github.com/qt-dork/albatross)
-

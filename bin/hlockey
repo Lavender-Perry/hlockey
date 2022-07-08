@@ -3,7 +3,6 @@
 # frozen_string_literal: true
 
 require_relative('../lib/league')
-require_relative('../lib/data/season')
 
 def menu_input(default, *choices)
   puts('Please enter a number...')
@@ -22,20 +21,33 @@ def menu_input_elem(default, choices)
   choices[i] unless i.negative?
 end
 
-PUTS = method(:puts)
-league = League.new(Season::NUMBER, Season::START_TIME)
+puts('Please wait...')
 
-if Time.now < Season::START_TIME
-  puts Season::START_TIME
-    .strftime("Season #{Season::NUMBER} starts at %H:%M on %A, %B %d.")
+PRINT_TEAM_WIN_LOSS = Proc.new do |team|
+  puts("  #{team.name_with_emoji.ljust(26)} #{team.wins}-#{team.losses}")
+end
+PRINT_TEAM_ROSTER = Proc.new do |team|
+  puts(team.name_with_emoji)
+  team.roster.each do |pos, player|
+    puts("  #{pos.to_s.ljust(6)}: #{player}")
+    player.stats.each { |stat, value| puts("    #{stat}: #{value.round(1)}") }
+  end
+end
+
+league = League.new
+
+if Time.now < league.start_time
+  puts(
+    league.start_time.strftime("Season #{league.season} starts at %H:%M, %A, %B %d.")
+  )
 end
 
 loop do
   league.update_state
 
-  puts("Season #{Season::NUMBER} day #{league.day}")
+  puts("Season #{league.season} day #{league.day}")
 
-  case menu_input('Exit', 'Games', 'Standings', 'Rosters', 'Election')
+  case menu_input('Exit', 'Games', 'Standings', 'Rosters', 'Election', 'Information')
   when 0 # Games
     if league.games_in_progress.empty?
       puts('There are currently no games being played.')
@@ -48,7 +60,7 @@ loop do
     loop do
       league.update_state
 
-      game.stream.each(&PUTS)
+      game.stream.each(&method(:puts))
 
       break unless game.in_progress
 
@@ -57,33 +69,40 @@ loop do
     end
   when 1 # Standings
     if league.champion_team
-      puts("Your season #{Season::NUMBER} champions are the "\
-           "#{league.champion_team.name}!")
+      puts("Your season #{league.season} champions are the #{league.champion_team}!")
     elsif league.playoff_teams
       puts('Playoffs')
-      league.playoff_teams.each(&:print_win_loss)
+      league.playoff_teams.each(&PRINT_TEAM_WIN_LOSS)
     end
 
     league.divisions.each do |name, teams|
       puts(name)
-      League::Team.sort(teams).each(&:print_win_loss)
+      League::Team.sort(teams).each(&PRINT_TEAM_WIN_LOSS)
     end
   when 2 # Rosters
-    teams = league.divisions.values.reduce(:+)
-    team = menu_input_elem('All teams', teams)
+    team = menu_input_elem('All teams', league.teams)
 
     if team.nil?
-      teams.each(&:print_roster)
+      league.teams.each(&PRINT_TEAM_ROSTER)
       next
     end
-    team.print_roster
+    PRINT_TEAM_ROSTER.call(team)
   when 3 # Election
-    Season::ELECTION.each do |category, options|
+    league.election[:categories].each do |category, options|
       puts(category)
       options.each { |name, description| puts("  #{name}: #{description}") }
     end
-    puts("Go to #{Season::ELECTION_FORM} to vote.\n"\
+    puts("Go to #{league.election[:form]} to vote.\n"\
          "If you don't want to use Google Forms, DM me on Discord (Lavender#9223).")
+  when 4 # Information
+    league.info.each do |title, info|
+      puts(title)
+      if info.class == Hash
+        info.each { |k, v| puts("  #{k}: #{v}") }
+      else
+        info.each_line { |l| puts("  #{l}") }
+      end
+    end
   else
     exit
   end

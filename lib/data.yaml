@@ -1,0 +1,883 @@
+---
+# Season
+- 1
+# Start time
+- 2022-07-04 17:00:00.000000000 Z
+# Election
+- :categories:
+    :Bribery:
+      :Eat More RAM: Add an online interface to the league.
+      :Weather: Move all the stadiums outdoors.
+      :We Do A Little Losing: Recognize the losingest teams with an Underbracket.
+    :Treasure:
+      :Vengabus: All your team's stats are boosted by your team's losses * 0.005.
+      :Dave: The worst stat on your team is set to 4.5.
+      :Nice: Boost your worst player by 0.69 in every stat.
+      :Convenient Math Error: Your team starts the next season with 5 wins.
+    :Coaching:
+      :Player Swapping: Swap the positions of 2 players on your team.
+      :Stat Swapping: Swap 2 stats of a player on your team.
+      :Draft: Replace a player with a random new player.
+      :Small Gamble: All your team's stats go up or down by 0.5 at random.
+      :Big Gamble: All your team's stats go up or down by 1.0 at random.
+  :form: https://forms.gle/saLp3ucxg2ERsY9L7
+# Information
+- :Format: |-
+    Hlockey has 3 game long regular season matchups, & 5 game long postseason matchups.
+    The regular season is round robin format.
+    Teams play 2 regular season matchups against each other.
+    Playoffs are single-elimination tournaments.
+    The top 2 teams of each division qualify for playoffs.
+    Playoffs are perfectly seeded (best player plays worst player, etc).
+  :Relation to Blaseball: |-
+    Both Hlockey and Blaseball are splorts, therefore they have some similarities.
+    Breaks will usually be scheduled when Blaseball is more active.
+    Hlockey is inspired by Blaseball, & would most likely not exist without it.
+  :Links:
+    :Source code: https://github.com/Lavender-Perry/hlockey
+    :Discord: https://discord.gg/hQMRZyexUB
+# Divisions
+- :Wet Warm:
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Antalya Pirates
+    emoji: "\U0001F30A"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Dandola Ernetrista
+        stats:
+          :offense: 3.818894119668528
+          :defense: 3.4144797351914855
+          :agility: 1.1179641839834276
+      :center: !ruby/object:League::Player
+        to_s: Andy Lavin
+        stats:
+          :offense: 0.8443587953946441
+          :defense: 1.5206909917978984
+          :agility: 1.9355986382079693
+      :rwing: !ruby/object:League::Player
+        to_s: Dannae Vine
+        stats:
+          :offense: 1.5992077803498934
+          :defense: 1.448257761908585
+          :agility: 2.324968078941792
+      :ldef: !ruby/object:League::Player
+        to_s: Isill Yada
+        stats:
+          :offense: 0.4005575981002124
+          :defense: 0.30444604670463726
+          :agility: 3.8862816248194565
+      :goalie: !ruby/object:League::Player
+        to_s: Valorgerie Phy
+        stats:
+          :offense: 1.1747120726847688
+          :defense: 0.7065901085686543
+          :agility: 0.7322292796701507
+      :rdef: !ruby/object:League::Player
+        to_s: Tia Brie
+        stats:
+          :offense: 4.341899724293083
+          :defense: 0.8865807941273657
+          :agility: 3.8273094136874644
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Baden Hallucinations
+    emoji: "\U0001F344"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Lildee Mel
+        stats:
+          :offense: 4.309127633872457
+          :defense: 4.590763648763545
+          :agility: 3.9919547863989018
+      :center: !ruby/object:League::Player
+        to_s: Veristi Marrethunk
+        stats:
+          :offense: 4.85972594502127
+          :defense: 3.6112384619714835
+          :agility: 4.423107706188714
+      :rwing: !ruby/object:League::Player
+        to_s: Samuele Todran
+        stats:
+          :offense: 3.3301344432913766
+          :defense: 3.1454220412646245
+          :agility: 2.3457787766329794
+      :ldef: !ruby/object:League::Player
+        to_s: Junanie Mara
+        stats:
+          :offense: 4.753934328388504
+          :defense: 2.005464959094074
+          :agility: 3.9468264856316493
+      :goalie: !ruby/object:League::Player
+        to_s: Domienie Arma
+        stats:
+          :offense: 0.21801325812424832
+          :defense: 4.452083217603205
+          :agility: 2.0203022169632097
+      :rdef: !ruby/object:League::Player
+        to_s: Weslyn Yuk
+        stats:
+          :offense: 0.02098077419000366
+          :defense: 3.540650202356707
+          :agility: 4.165896249760077
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Kópavogur Seals
+    emoji: "\U0001F9AD"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Lorlenn Kath
+        stats:
+          :offense: 2.279121223503016
+          :defense: 3.413104654558497
+          :agility: 4.558902336928136
+      :center: !ruby/object:League::Player
+        to_s: Don Sta
+        stats:
+          :offense: 2.2941370528222538
+          :defense: 1.795352665946084
+          :agility: 2.7065050313267234
+      :rwing: !ruby/object:League::Player
+        to_s: Eddie Cle
+        stats:
+          :offense: 4.6663977633076295
+          :defense: 4.395064078319088
+          :agility: 1.0157199825369485
+      :ldef: !ruby/object:League::Player
+        to_s: Beany Genella
+        stats:
+          :offense: 0.07623589297423183
+          :defense: 1.2083063853307703
+          :agility: 0.6956702836990131
+      :goalie: !ruby/object:League::Player
+        to_s: Edgartie Shel
+        stats:
+          :offense: 4.621163579742806
+          :defense: 2.9246851945446255
+          :agility: 0.1499977903064975
+      :rdef: !ruby/object:League::Player
+        to_s: Nganna Elvena
+        stats:
+          :offense: 4.354684563953772
+          :defense: 0.16716006301817077
+          :agility: 4.522289435945403
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Lagos Soup
+    emoji: "\U0001F963"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Rice Minda
+        stats:
+          :offense: 2.867640552908837
+          :defense: 3.992210647903481
+          :agility: 4.874965248802921
+      :center: !ruby/object:League::Player
+        to_s: Ronelani Marjorisey
+        stats:
+          :offense: 2.51132508098965
+          :defense: 4.158312554102357
+          :agility: 3.9341841123305383
+      :rwing: !ruby/object:League::Player
+        to_s: Myl Roseba
+        stats:
+          :offense: 2.2122935409560167
+          :defense: 4.407390568364986
+          :agility: 3.6926409624377228
+      :ldef: !ruby/object:League::Player
+        to_s: Evaredra Mado
+        stats:
+          :offense: 2.167621841850597
+          :defense: 2.291838019101466
+          :agility: 4.514708613788861
+      :goalie: !ruby/object:League::Player
+        to_s: Lyn Vina
+        stats:
+          :offense: 4.514770407146569
+          :defense: 0.1642728574908503
+          :agility: 0.019566434993412707
+      :rdef: !ruby/object:League::Player
+        to_s: Kena Jana
+        stats:
+          :offense: 4.246722745802704
+          :defense: 1.4003089659843666
+          :agility: 1.0278680605294488
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Pica Acid
+    emoji: "\U0001F9EA"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Saula Murika
+        stats:
+          :offense: 4.604300868853074
+          :defense: 2.5322336424454406
+          :agility: 1.4150817028613156
+      :center: !ruby/object:League::Player
+        to_s: Bea Roshina
+        stats:
+          :offense: 4.208544857490024
+          :defense: 1.5429382021881617
+          :agility: 4.906786873412225
+      :rwing: !ruby/object:League::Player
+        to_s: Domethan Betty
+        stats:
+          :offense: 2.531956051279454
+          :defense: 0.2931522866761255
+          :agility: 3.917013688411811
+      :ldef: !ruby/object:League::Player
+        to_s: Mohana Mada
+        stats:
+          :offense: 1.8979198809984188
+          :defense: 3.573911941832883
+          :agility: 1.2976445446332452
+      :goalie: !ruby/object:League::Player
+        to_s: Tandina Grah
+        stats:
+          :offense: 0.33214578302723397
+          :defense: 4.10806743697928
+          :agility: 2.8961431375521856
+      :rdef: !ruby/object:League::Player
+        to_s: Onisa Elsikeeder
+        stats:
+          :offense: 2.8321075390015893
+          :defense: 0.43492337583865004
+          :agility: 1.0727047093553577
+  :Dry Warm:
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Dawson City Impostors
+    emoji: "\U0001F52A"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Akisha Elsianda
+        stats:
+          :offense: 2.6893096993326724
+          :defense: 2.121468481171367
+          :agility: 0.673346104537263
+      :center: !ruby/object:League::Player
+        to_s: Wal Carine
+        stats:
+          :offense: 4.600228316595542
+          :defense: 4.097027056181463
+          :agility: 4.373686103175517
+      :rwing: !ruby/object:League::Player
+        to_s: Lin Carb
+        stats:
+          :offense: 2.649080747296706
+          :defense: 1.200378632363945
+          :agility: 1.4077342281045646
+      :ldef: !ruby/object:League::Player
+        to_s: Vanditarce Odela
+        stats:
+          :offense: 4.022981019442888
+          :defense: 0.469322957974867
+          :agility: 0.735163687021968
+      :goalie: !ruby/object:League::Player
+        to_s: Sha Carle
+        stats:
+          :offense: 3.101522587496291
+          :defense: 4.864593355375425
+          :agility: 0.5327534620691982
+      :rdef: !ruby/object:League::Player
+        to_s: Alommee Oth
+        stats:
+          :offense: 3.6967832018902342
+          :defense: 4.119157307656223
+          :agility: 0.9322273365256756
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Erlangen Ohms
+    emoji: "\U0001F1F4"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Mero Rose
+        stats:
+          :offense: 4.1100048381777174
+          :defense: 2.277380968880653
+          :agility: 3.5109857077979627
+      :center: !ruby/object:League::Player
+        to_s: Marg Mic
+        stats:
+          :offense: 0.8767769408179032
+          :defense: 4.7499701618392045
+          :agility: 3.902998322914585
+      :rwing: !ruby/object:League::Player
+        to_s: Shewenne Miline
+        stats:
+          :offense: 4.300125613800633
+          :defense: 3.163710627212966
+          :agility: 4.804471387282466
+      :ldef: !ruby/object:League::Player
+        to_s: Bent Josemburmi
+        stats:
+          :offense: 0.004366571626243099
+          :defense: 4.83924091430933
+          :agility: 1.588609271274695
+      :goalie: !ruby/object:League::Player
+        to_s: Nigeno Adreenvian
+        stats:
+          :offense: 0.7857632223023558
+          :defense: 1.6472472174174158
+          :agility: 0.9778747362596318
+      :rdef: !ruby/object:League::Player
+        to_s: Casmon Brisevie
+        stats:
+          :offense: 3.114974743994497
+          :defense: 3.047115205234527
+          :agility: 0.6987393928025232
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Pompei Eruptions
+    emoji: "\U0001F30B"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Burene Nohnna
+        stats:
+          :offense: 3.492443797498708
+          :defense: 2.488447151495574
+          :agility: 0.8322169110073829
+      :center: !ruby/object:League::Player
+        to_s: Yukisterin Ozielyn
+        stats:
+          :offense: 4.1483116718375825
+          :defense: 2.2639946258026855
+          :agility: 4.410987154020578
+      :rwing: !ruby/object:League::Player
+        to_s: Evetusteri Margelma
+        stats:
+          :offense: 2.9140987361720665
+          :defense: 4.233698229828847
+          :agility: 3.8365762593739268
+      :ldef: !ruby/object:League::Player
+        to_s: Gwen Castanda
+        stats:
+          :offense: 2.9489033614711864
+          :defense: 2.229225220271988
+          :agility: 3.3539037075812876
+      :goalie: !ruby/object:League::Player
+        to_s: Jeaudon Roslessa
+        stats:
+          :offense: 4.590908892396598
+          :defense: 2.4001871703759066
+          :agility: 0.24872813702810914
+      :rdef: !ruby/object:League::Player
+        to_s: Lathellen Dorniquan
+        stats:
+          :offense: 3.099164426849454
+          :defense: 4.80139982991968
+          :agility: 2.811786388750754
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Rio de Janeiro Directors
+    emoji: "\U0001F3A6"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Carisancel Chri
+        stats:
+          :offense: 4.965115716336476
+          :defense: 0.007845643296621185
+          :agility: 1.1147824764218766
+      :center: !ruby/object:League::Player
+        to_s: Luley Ora
+        stats:
+          :offense: 2.6984533675715854
+          :defense: 0.6179100170249335
+          :agility: 2.2612702553496473
+      :rwing: !ruby/object:League::Player
+        to_s: Cassako Chricobha
+        stats:
+          :offense: 0.5542374568567165
+          :defense: 3.3839009811857164
+          :agility: 4.5415150715112
+      :ldef: !ruby/object:League::Player
+        to_s: Merlen Joh
+        stats:
+          :offense: 2.4220869253714756
+          :defense: 2.22183013976467
+          :agility: 1.0819219011870507
+      :goalie: !ruby/object:League::Player
+        to_s: Caseslia Krynorgine
+        stats:
+          :offense: 1.5796833264687908
+          :defense: 3.2491763145019497
+          :agility: 0.5391638509709706
+      :rdef: !ruby/object:League::Player
+        to_s: Thu Loly
+        stats:
+          :offense: 4.196969915661217
+          :defense: 3.53189343747425
+          :agility: 4.176371115545976
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Wyrzysk Rockets
+    emoji: "\U0001F680"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Lew Debbi
+        stats:
+          :offense: 1.027062925481688
+          :defense: 3.039697532733014
+          :agility: 4.472816934413972
+      :center: !ruby/object:League::Player
+        to_s: Sopardetha Purarlynor
+        stats:
+          :offense: 3.0994050998369502
+          :defense: 0.41931230746487413
+          :agility: 0.5999825762044048
+      :rwing: !ruby/object:League::Player
+        to_s: Paud Ceco
+        stats:
+          :offense: 1.0061455484428683
+          :defense: 0.5179507656952331
+          :agility: 4.706662113132448
+      :ldef: !ruby/object:League::Player
+        to_s: Edmundan Jeanta
+        stats:
+          :offense: 2.5516815960329193
+          :defense: 4.858372014632782
+          :agility: 1.547294673067519
+      :goalie: !ruby/object:League::Player
+        to_s: Jon Loura
+        stats:
+          :offense: 3.3866551120578654
+          :defense: 4.0165666170901035
+          :agility: 3.340150907644923
+      :rdef: !ruby/object:League::Player
+        to_s: Desakey Teonon
+        stats:
+          :offense: 1.6206163244133098
+          :defense: 0.9486889856742975
+          :agility: 3.248277681739087
+  :Wet Cool:
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Cape Town Transplants
+    emoji: "\U0001F331"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Hayetinevo Sance
+        stats:
+          :offense: 4.960442749475683
+          :defense: 0.543245901316689
+          :agility: 1.7203111823011112
+      :center: !ruby/object:League::Player
+        to_s: Shancilesi Lucie
+        stats:
+          :offense: 0.08435406456534844
+          :defense: 1.398447317356969
+          :agility: 1.811499413842938
+      :rwing: !ruby/object:League::Player
+        to_s: Marmil Eilarema
+        stats:
+          :offense: 4.523015189033167
+          :defense: 1.325464789349865
+          :agility: 0.9240679801017526
+      :ldef: !ruby/object:League::Player
+        to_s: Tonse Chryane
+        stats:
+          :offense: 0.7456700606305633
+          :defense: 1.1666457918694624
+          :agility: 0.1503818652470612
+      :goalie: !ruby/object:League::Player
+        to_s: Merry Nate
+        stats:
+          :offense: 0.3577700557508956
+          :defense: 4.852251329679323
+          :agility: 4.212698599931343
+      :rdef: !ruby/object:League::Player
+        to_s: Alebellena Ald
+        stats:
+          :offense: 2.832228934156226
+          :defense: 1.4112008963032874
+          :agility: 2.647570492084384
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Manbij Fish
+    emoji: "\U0001F420"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Alet Jungellice
+        stats:
+          :offense: 0.07803252284160345
+          :defense: 1.6371807065821442
+          :agility: 0.17008924660433633
+      :center: !ruby/object:League::Player
+        to_s: Maricalena Wilia
+        stats:
+          :offense: 4.287233589525911
+          :defense: 1.282754435042453
+          :agility: 1.7694932005014592
+      :rwing: !ruby/object:League::Player
+        to_s: Dimon Leori
+        stats:
+          :offense: 4.246483375155002
+          :defense: 4.668957383836511
+          :agility: 3.643656225253694
+      :ldef: !ruby/object:League::Player
+        to_s: Marlyn Magra
+        stats:
+          :offense: 1.335031896275256
+          :defense: 1.7076266399984634
+          :agility: 3.0359544159790492
+      :goalie: !ruby/object:League::Player
+        to_s: Cla Wina
+        stats:
+          :offense: 1.852988286994779
+          :defense: 4.836644602860752
+          :agility: 4.983723717563135
+      :rdef: !ruby/object:League::Player
+        to_s: Jandald Garet
+        stats:
+          :offense: 1.12724141997443
+          :defense: 4.872632473363547
+          :agility: 0.8609606419867638
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Nagqu Paint
+    emoji: "\U0001F3A8"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Shia Tri
+        stats:
+          :offense: 0.7151831794795466
+          :defense: 4.382025343363705
+          :agility: 4.48358256010083
+      :center: !ruby/object:League::Player
+        to_s: Meggaitte Jammy
+        stats:
+          :offense: 1.6012486751636286
+          :defense: 0.5650924923805778
+          :agility: 0.4669062635584731
+      :rwing: !ruby/object:League::Player
+        to_s: Mann Coredrita
+        stats:
+          :offense: 1.6468152532237923
+          :defense: 1.0859632958151226
+          :agility: 1.170060891508971
+      :ldef: !ruby/object:League::Player
+        to_s: Edmungette Hirleista
+        stats:
+          :offense: 0.4162397962716402
+          :defense: 2.293767230532783
+          :agility: 2.2379303452001236
+      :goalie: !ruby/object:League::Player
+        to_s: Dode Reeninee
+        stats:
+          :offense: 3.7786537884888096
+          :defense: 1.3430645759117932
+          :agility: 3.5639995671778246
+      :rdef: !ruby/object:League::Player
+        to_s: Toba Jana
+        stats:
+          :offense: 4.386192246880695
+          :defense: 0.2823380707487855
+          :agility: 2.789545681394209
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Nice Backflippers
+    emoji: "\U0001F504"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Bargelean Kathonespi
+        stats:
+          :offense: 1.5185198751430962
+          :defense: 0.9720913575264828
+          :agility: 2.674158016608046
+      :center: !ruby/object:League::Player
+        to_s: Ton Mitelvelli
+        stats:
+          :offense: 4.713643363583734
+          :defense: 0.5886831598618941
+          :agility: 0.5089923146143915
+      :rwing: !ruby/object:League::Player
+        to_s: Sillia Lina
+        stats:
+          :offense: 0.4229533914845124
+          :defense: 0.6413590857353357
+          :agility: 3.2892046072825383
+      :ldef: !ruby/object:League::Player
+        to_s: Gallettacq Joreta
+        stats:
+          :offense: 0.3145036078234509
+          :defense: 3.4178659133149236
+          :agility: 4.944893121219804
+      :goalie: !ruby/object:League::Player
+        to_s: Flomarlie Pegettepha
+        stats:
+          :offense: 1.8095218195811706
+          :defense: 2.7552564744524686
+          :agility: 1.9021167508459513
+      :rdef: !ruby/object:League::Player
+        to_s: Ene Marlaura
+        stats:
+          :offense: 2.666283994607924
+          :defense: 3.8220364263528612
+          :agility: 3.0744741623183396
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Orcadas Base Fog
+    emoji: "\U0001F301"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Sabelia Dempia
+        stats:
+          :offense: 2.441370818134459
+          :defense: 0.5146349334085115
+          :agility: 3.8024873201850347
+      :center: !ruby/object:League::Player
+        to_s: Jeatrisarg Efria
+        stats:
+          :offense: 2.821545079645435
+          :defense: 0.5379371210952805
+          :agility: 2.5512738617923687
+      :rwing: !ruby/object:League::Player
+        to_s: Lin Irma
+        stats:
+          :offense: 0.018767367381359867
+          :defense: 2.887053032969913
+          :agility: 2.5682113561156523
+      :ldef: !ruby/object:League::Player
+        to_s: Deber Cucia
+        stats:
+          :offense: 4.024800649244164
+          :defense: 2.1065667353816213
+          :agility: 3.242984285353509
+      :goalie: !ruby/object:League::Player
+        to_s: Pormel Torishanet
+        stats:
+          :offense: 2.680615293053172
+          :defense: 3.167462241598979
+          :agility: 3.340242573872536
+      :rdef: !ruby/object:League::Player
+        to_s: Melli Tuye
+        stats:
+          :offense: 2.345249049989797
+          :defense: 3.392304012958874
+          :agility: 3.7899023741105244
+  :Dry Cool:
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Baghdad Abacuses
+    emoji: "\U0001F9EE"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Eard Sly
+        stats:
+          :offense: 2.613065837789514
+          :defense: 1.6573638676714308
+          :agility: 2.9491164655226636
+      :center: !ruby/object:League::Player
+        to_s: Maranny Madina
+        stats:
+          :offense: 1.4128013003566564
+          :defense: 0.702020440278861
+          :agility: 1.0847942950393392
+      :rwing: !ruby/object:League::Player
+        to_s: Cathlisa Die
+        stats:
+          :offense: 0.5659798576974939
+          :defense: 2.749132737041533
+          :agility: 2.467777037410934
+      :ldef: !ruby/object:League::Player
+        to_s: Flomina Cucisha
+        stats:
+          :offense: 2.7933690795711303
+          :defense: 4.026750935804065
+          :agility: 3.2836725099068955
+      :goalie: !ruby/object:League::Player
+        to_s: Enisto Dene
+        stats:
+          :offense: 1.013393977043406
+          :defense: 1.7970475408328668
+          :agility: 2.122758361650001
+      :rdef: !ruby/object:League::Player
+        to_s: Mil Hedrilia
+        stats:
+          :offense: 1.4893714141330439
+          :defense: 2.024330024772146
+          :agility: 1.0659620478366438
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Jakarta Architects
+    emoji: "\U0001F4D0"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Mert Wilon
+        stats:
+          :offense: 3.4063119290763053
+          :defense: 0.7517856268035839
+          :agility: 2.1772104934841137
+      :center: !ruby/object:League::Player
+        to_s: Jease Vivelleedr
+        stats:
+          :offense: 1.9050150363088825
+          :defense: 4.7122932935760895
+          :agility: 4.5141825942992515
+      :rwing: !ruby/object:League::Player
+        to_s: Sal Everie
+        stats:
+          :offense: 0.3224645994521613
+          :defense: 4.844724451206181
+          :agility: 2.12136705710104
+      :ldef: !ruby/object:League::Player
+        to_s: Gudienna Correnteph
+        stats:
+          :offense: 0.10072419092979124
+          :defense: 0.5766712569240223
+          :agility: 3.2178553339719334
+      :goalie: !ruby/object:League::Player
+        to_s: Fainnya Jula
+        stats:
+          :offense: 3.6384744044497648
+          :defense: 3.1307994601576987
+          :agility: 4.669280398862664
+      :rdef: !ruby/object:League::Player
+        to_s: Ngue Laurta
+        stats:
+          :offense: 1.197751751597681
+          :defense: 2.4836266434144214
+          :agility: 0.8942566062000823
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Kyoto Payphones
+    emoji: "\U0001F4F3"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Aldee Lon
+        stats:
+          :offense: 4.254301228951009
+          :defense: 0.11429916444699206
+          :agility: 0.9320635342680239
+      :center: !ruby/object:League::Player
+        to_s: Kimarrise Gronicton
+        stats:
+          :offense: 0.6064558123458991
+          :defense: 1.3402072262142934
+          :agility: 3.6794431564702563
+      :rwing: !ruby/object:League::Player
+        to_s: Cla Elkia
+        stats:
+          :offense: 0.6108669741877848
+          :defense: 1.8112307289745067
+          :agility: 0.8304913770360783
+      :ldef: !ruby/object:League::Player
+        to_s: Kan Ashann
+        stats:
+          :offense: 3.2487928092184815
+          :defense: 4.30800493980456
+          :agility: 2.5192079533438654
+      :goalie: !ruby/object:League::Player
+        to_s: Niny Roshine
+        stats:
+          :offense: 1.7602207021503857
+          :defense: 3.9303765111925646
+          :agility: 3.9427662718604943
+      :rdef: !ruby/object:League::Player
+        to_s: Ard Marita
+        stats:
+          :offense: 0.21575354726970752
+          :defense: 2.9515594445930455
+          :agility: 0.23419584752973066
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Stony Brook Reapers
+    emoji: "\U0001F480"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Merene Phie
+        stats:
+          :offense: 1.4060061121167389
+          :defense: 4.579674986428387
+          :agility: 0.9055178762079841
+      :center: !ruby/object:League::Player
+        to_s: Lucioven Megarby
+        stats:
+          :offense: 1.2119831007603765
+          :defense: 2.008262073013745
+          :agility: 3.645012169532285
+      :rwing: !ruby/object:League::Player
+        to_s: Emon Suzanna
+        stats:
+          :offense: 1.9276624977755237
+          :defense: 0.7897922026133702
+          :agility: 3.7160248649763994
+      :ldef: !ruby/object:League::Player
+        to_s: Rimikkiser Arlee
+        stats:
+          :offense: 2.9513418405675655
+          :defense: 3.8792212189579156
+          :agility: 4.133205413829378
+      :goalie: !ruby/object:League::Player
+        to_s: Zacinadeld Asa
+        stats:
+          :offense: 2.0395060058505123
+          :defense: 0.885801296035415
+          :agility: 2.9289136900452823
+      :rdef: !ruby/object:League::Player
+        to_s: Ilia Boriu
+        stats:
+          :offense: 3.4105915386058774
+          :defense: 1.6617680273609263
+          :agility: 1.2537385286608949
+  - !ruby/object:League::Team
+    wins: 0
+    losses: 0
+    to_s: Sydney Thinkers
+    emoji: "\U0001F914"
+    roster:
+      :lwing: !ruby/object:League::Player
+        to_s: Floreana Suma
+        stats:
+          :offense: 0.5686387281504379
+          :defense: 3.7620738655960526
+          :agility: 0.6784086915116189
+      :center: !ruby/object:League::Player
+        to_s: Retta Vasie
+        stats:
+          :offense: 2.8838433613584806
+          :defense: 2.6380085216655624
+          :agility: 0.524620365783342
+      :rwing: !ruby/object:League::Player
+        to_s: Sebby Elen
+        stats:
+          :offense: 2.734101182915938
+          :defense: 1.708762224327589
+          :agility: 2.409885115387476
+      :ldef: !ruby/object:League::Player
+        to_s: Lia Mine
+        stats:
+          :offense: 0.02049891767248402
+          :defense: 0.9404507492920489
+          :agility: 0.5521827453535771
+      :goalie: !ruby/object:League::Player
+        to_s: Dene Blana
+        stats:
+          :offense: 2.5524933939848573
+          :defense: 0.5955324247039195
+          :agility: 3.1227041090328305
+      :rdef: !ruby/object:League::Player
+        to_s: Kemen Shiree
+        stats:
+          :offense: 2.5667136371570876
+          :defense: 4.212514906688839
+          :agility: 0.14754192627162488

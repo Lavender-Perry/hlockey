@@ -4,28 +4,17 @@ require('yaml')
 require_relative('./game')
 
 class League
-  attr_reader(:divisions, :day, :games_in_progress, :playoff_teams, :champion_team)
+  attr_reader(:season, :start_time, :election, :info, :divisions,
+              :teams, :day, :games_in_progress, :playoff_teams, :champion_team)
 
   class Team
     private_class_method(:new)
 
     attr_accessor(:wins, :losses)
-    attr_reader(:name, :emoji, :roster)
+    attr_reader(:to_s, :emoji, :roster)
 
-    def to_s
-      "#{@emoji} #{@name}"
-    end
-
-    def print_win_loss
-      puts("  #{to_s.ljust 26} #{@wins}-#{@losses}")
-    end
-
-    def print_roster
-      puts(to_s)
-      @roster.each do |pos, player|
-        puts("  #{pos.to_s.ljust(6)}: #{player}")
-        player.stats.each { |stat, value| puts("    #{stat}: #{value.round 1}") }
-      end
+    def name_with_emoji
+      "#{@emoji} #{@to_s}"
     end
 
     def self.sort(teams)
@@ -33,20 +22,20 @@ class League
     end
   end
 
-  def initialize(season, start_time)
-    # The YAML file is included with the program,
-    # so this is as safe as anything else
-    @divisions = YAML.unsafe_load_file(File.expand_path('data/divisions.yaml',
-                                                        File.dirname(__FILE__)))
-
+  def initialize
+    @season, @start_time, @election, @info, @divisions = YAML.unsafe_load_file(
+      File.expand_path('data.yaml', File.dirname(__FILE__))
+    )
+    @start_time.localtime
     @day = 0
     @games_in_progress = []
     @games = []
     @champion_team = nil
-    @last_update_time = start_time
+    @last_update_time = @start_time
     @passed_updates = 0
-    @prng = Random.new(69_420 * season)
-    @shuffled_teams = @divisions.values.reduce(:+).shuffle(random: @prng)
+    @prng = Random.new(69_420 * @season)
+    @teams = @divisions.values.reduce(:+)
+    @shuffled_teams = teams.shuffle(random: @prng)
     @playoff_teams = nil
     @game_in_matchup = 3
   end
@@ -105,7 +94,7 @@ class League
 
       new_playoff_matchups
     when 1
-      @playoff_teams = Team.sort(@playoff_teams).first(@playoff_teams.length / 2)
+      @playoff_teams.select! { |team| team.wins > team.losses }
 
       if @playoff_teams.length == 1
         @champion_team = @playoff_teams[0]
@@ -127,14 +116,13 @@ class League
       team.losses = 0
     end
 
-    (0...@playoff_teams.length).step(2) do |i|
-      @games << Game.new(*@playoff_teams[i, 2], @prng)
+    (@playoff_teams.length / 2).times do |i|
+      @games << Game.new(@playoff_teams[i], @playoff_teams[-i - 1], @prng)
     end
   end
 
   class Player
     private_class_method(:new)
-
     attr_reader(:stats, :to_s)
   end
 end

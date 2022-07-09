@@ -295,7 +295,7 @@
     wins: 0
     losses: 0
     to_s: Erlangen Ohms
-    emoji: "\U0001F1F4"
+    emoji: "\U00002652"
     roster:
       :lwing: !ruby/object:League::Player
         to_s: Mero Rose

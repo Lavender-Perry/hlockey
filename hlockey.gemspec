@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require_relative('lib/hlockey/version')
+
 Gem::Specification.new do |s|
   s.name = 'hlockey'
-  s.version = '1'
-  s.summary = "Hlockey season #{s.version}."
+  s.version = Hlockey::VERSION
+  s.summary = "Hlockey season #{Hlockey::VERSION}."
   s.description = 'Hockey sports sim.'
   s.authors = ['Lavender Perry']
   s.email = 'endie2@protonmail.com'

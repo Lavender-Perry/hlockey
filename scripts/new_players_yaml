@@ -51,7 +51,7 @@ player_amount = 1 if player_amount < 1
 player_amount.times do
   puts(
   <<-PLAYER
-!ruby/object:League::Player
+!ruby/object:Hlockey::League::Player
   to_s: #{random_name} #{random_name}
   stats:
     :offense: #{rand * 5}

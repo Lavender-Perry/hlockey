@@ -2,7 +2,7 @@
 
 # frozen_string_literal: true
 
-require_relative('../lib/league')
+require('hlockey')
 
 def menu_input(default, *choices)
   puts('Please enter a number...')
@@ -34,18 +34,18 @@ PRINT_TEAM_ROSTER = Proc.new do |team|
   end
 end
 
-league = League.new
+league = Hlockey::League.new
 
 if Time.now < league.start_time
   puts(
-    league.start_time.strftime("Season #{league.season} starts at %H:%M, %A, %B %d.")
+    league.start_time.strftime("Season #{Hlockey::VERSION} starts at %H:%M, %A, %B %d.")
   )
 end
 
 loop do
   league.update_state
 
-  puts("Season #{league.season} day #{league.day}")
+  puts("Season #{Hlockey::VERSION} day #{league.day}")
 
   case menu_input('Exit', 'Games', 'Standings', 'Rosters', 'Election', 'Information')
   when 0 # Games
@@ -69,7 +69,7 @@ loop do
     end
   when 1 # Standings
     if league.champion_team
-      puts("Your season #{league.season} champions are the #{league.champion_team}!")
+      puts("Your season #{Hlockey::VERSION} champions are the #{league.champion_team}!")
     elsif league.playoff_teams
       puts('Playoffs')
       league.playoff_teams.each(&PRINT_TEAM_WIN_LOSS)
@@ -77,7 +77,7 @@ loop do
 
     league.divisions.each do |name, teams|
       puts(name)
-      League::Team.sort(teams).each(&PRINT_TEAM_WIN_LOSS)
+      teams.each(&PRINT_TEAM_WIN_LOSS)
     end
   when 2 # Rosters
     team = menu_input_elem('All teams', league.teams)
@@ -88,14 +88,15 @@ loop do
     end
     PRINT_TEAM_ROSTER.call(team)
   when 3 # Election
-    league.election[:categories].each do |category, options|
+    election = Hlockey.load_data('election')
+    election[:categories].each do |category, options|
       puts(category)
       options.each { |name, description| puts("  #{name}: #{description}") }
     end
-    puts("Go to #{league.election[:form]} to vote.\n"\
+    puts("Go to #{election[:form]} to vote.\n"\
          "If you don't want to use Google Forms, DM me on Discord (Lavender#9223).")
   when 4 # Information
-    league.info.each do |title, info|
+    Hlockey.load_data('information').each do |title, info|
       puts(title)
       if info.class == Hash
         info.each { |k, v| puts("  #{k}: #{v}") }

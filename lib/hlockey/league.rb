@@ -8,7 +8,7 @@ require('hlockey/version')
 module Hlockey
   class League
     attr_reader(:start_time, :divisions, :teams, :day,
-                :games_in_progress, :playoff_teams, :champion_team)
+                :games, :games_in_progress, :playoff_teams, :champion_team)
 
     def initialize
       @start_time, @divisions = Hlockey.load_data('league')

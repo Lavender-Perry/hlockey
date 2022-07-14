@@ -4,15 +4,15 @@ require('hlockey/messages')
 
 module Hlockey
   class Game
-    attr_reader(:home, :away, :stream, :in_progress)
+    attr_reader(:home, :away, :stream, :score, :in_progress)
 
     def initialize(home, away, prng)
       @home = home
       @away = away
       @prng = prng
       @stream = [Messages.StartOfGame(to_s)]
-      @in_progress = true
       @score = { home: 0, away: 0 }
+      @in_progress = true
       @actions = 0
       @period = 1
       @face_off = true

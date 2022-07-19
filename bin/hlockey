@@ -57,6 +57,7 @@ loop do
     game = menu_input_elem('Back', league.games_in_progress)
     next if game.nil?
 
+    puts("#{game.home.emoji} #{game} #{game.away.emoji}")
     loop do
       league.update_state
 

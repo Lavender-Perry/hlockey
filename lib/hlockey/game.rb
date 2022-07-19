@@ -10,7 +10,7 @@ module Hlockey
       @home = home
       @away = away
       @prng = prng
-      @stream = [Messages.StartOfGame(to_s)]
+      @stream = [Messages.StartOfGame]
       @score = { home: 0, away: 0 }
       @in_progress = true
       @actions = 0
@@ -23,7 +23,7 @@ module Hlockey
     end
 
     def to_s
-      "#{@home.emoji} #{@home} vs #{@away} #{@away.emoji}"
+      "#{@home} vs #{@away}"
     end
 
     def update

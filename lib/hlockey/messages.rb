@@ -13,7 +13,7 @@ module Hlockey
 
     class << self
       [
-        %i[StartOfGame title],
+        %i[StartOfGame],
         %i[EndOfGame winning_team],
         %i[StartOfPeriod period],
         %i[EndOfPeriod period home away home_score away_score],
@@ -32,7 +32,7 @@ module Hlockey
     def to_s
       case @event
       when :StartOfGame
-        "#{@title}\nHocky!"
+        'Hocky!'
       when :EndOfGame
         "Game over.\n#{@winning_team} win!"
       when :StartOfPeriod

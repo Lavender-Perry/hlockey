@@ -90,12 +90,11 @@ loop do
     PRINT_TEAM_ROSTER.call(team)
   when 3 # Election
     election = Hlockey.load_data('election')
-    election[:categories].each do |category, options|
+    election.each do |category, options|
       puts(category)
       options.each { |name, description| puts("  #{name}: #{description}") }
     end
-    puts("Go to #{election[:form]} to vote.\n"\
-         "If you don't want to use Google Forms, DM me on Discord (Lavender#9223).")
+    puts('Go to the website (WIP) to vote.')
   when 4 # Information
     Hlockey.load_data('information').each do |title, info|
       puts(title)

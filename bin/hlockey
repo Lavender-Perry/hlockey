@@ -98,12 +98,10 @@ loop do
   when 4 # Information
     Hlockey.load_data('information').each do |title, info|
       puts(title)
-      if info.class == Hash
-        info.each { |k, v| puts("  #{k}: #{v}") }
-      else
-        info.each_line { |l| puts("  #{l}") }
-      end
+      info.each_line { |l| puts("  #{l}") }
     end
+    puts('Links')
+    Hlockey.load_data('links').each { |site, link| puts("  #{site}: #{link}") }
   else
     exit
   end

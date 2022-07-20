@@ -1,6 +1,5 @@
 # Hlockey
-Hockey sports sim.\
-Join [the Discord server](https://discord.gg/hQMRZyexUB) to chat or for support.
+Hlockey library and console application.
 
 ## Installation Instructions
 1. Get Ruby if you do not already have it ([instructions](https://www.ruby-lang.org/en/downloads/))
@@ -18,11 +17,6 @@ Documentation for this will be available eventually.
 
 ## License
 Hlockey is licensed under the [CNPL-NAv7+](LICENSE.md)
-
-## Inspirations
-* [Blaseball](https://blaseball.com)
-* [Alt League Blaseball](https://github.com/themixedmaster/alt-league-blaseball)
-* [Albatross](https://github.com/qt-dork/albatross)
 
 ## Credits
 * [NameDatabases](https://github.com/smashew/NameDatabases) is used for generating player names
